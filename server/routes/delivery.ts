@@ -47,6 +47,21 @@ router.post('/assign', (req: Request, res: Response) => {
   }
 });
 
+// POST /api/deliveries/reserve - Direct alias for NGO surplus donation reservation
+router.post('/reserve', (req: Request, res: Response) => {
+  try {
+    const { surplus_id, ngo_id, vehicle_id } = req.body;
+    if (!surplus_id || !ngo_id) {
+      res.status(400).json({ error: 'surplus_id and ngo_id are required' });
+      return;
+    }
+    const delivery = assignDonationToNGO({ surplus_id, ngo_id, vehicle_id });
+    res.status(201).json(delivery);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // PATCH /api/deliveries/:id/status - Update delivery status
 router.patch('/:id/status', (req: Request, res: Response) => {
   try {

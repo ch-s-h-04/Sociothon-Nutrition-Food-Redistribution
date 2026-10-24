@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SurplusEvent, MatchingResult, MatchCandidate } from '../types';
+import { SurplusEvent, MatchingResult, MatchCandidate, RecipientNGO, FleetVehicle } from '../types';
 import { api } from '../utils/api';
 import {
   HeartHandshake,
@@ -14,7 +14,11 @@ import {
   Clock,
   Layers,
   Award,
-  ChevronRight
+  ChevronRight,
+  Plus,
+  Users,
+  BookOpen,
+  X
 } from 'lucide-react';
 
 interface SmartMatchingProps {
@@ -35,6 +39,12 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [isAssigning, setIsAssigning] = useState<boolean>(false);
   const [assignmentSuccess, setAssignmentSuccess] = useState<string | null>(null);
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [showDirectory, setShowDirectory] = useState(false);
+  const [ngos, setNgos] = useState<RecipientNGO[]>([]);
+  const [vehicles, setVehicles] = useState<FleetVehicle[]>([]);
+  const [registrationError, setRegistrationError] = useState<string | null>(null);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
     if (selectedSurplusId) {
@@ -67,7 +77,7 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
     if (!activeListingId) return;
     try {
       setIsAssigning(true);
-      const delivery = await api.deliveries.assign({
+      const delivery = await api.deliveries.reserve({
         surplus_id: activeListingId,
         ngo_id: candidate.ngo.id,
         vehicle_id: candidate.vehicle?.id
@@ -80,6 +90,48 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
       alert(`Assignment failed: ${err.message}`);
     } finally {
       setIsAssigning(false);
+    }
+  };
+
+  const loadNetwork = async () => {
+    const [ngoList, vehicleList] = await Promise.all([api.entities.getNGOs(), api.entities.getVehicles()]);
+    setNgos(ngoList);
+    setVehicles(vehicleList);
+  };
+
+  const handleOpenDirectory = async () => {
+    try {
+      await loadNetwork();
+      setShowDirectory(true);
+    } catch (err: any) {
+      alert(`Could not load NGO network: ${err.message}`);
+    }
+  };
+
+  const handleRegisterNGO = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const value = (name: string) => String(form.get(name) || '').trim();
+    const list = (name: string) => value(name).split(',').map(item => item.trim()).filter(Boolean);
+    try {
+      setIsRegistering(true);
+      setRegistrationError(null);
+      const ngo = await api.entities.createNGO({
+        name: value('name'), address: value('address'), district: value('district'), state: value('state'),
+        latitude: Number(value('latitude')), longitude: Number(value('longitude')),
+        daily_capacity_meals: Number(value('daily_capacity_meals')), service_radius_km: Number(value('service_radius_km') || 15),
+        contact_person: value('contact_person'), contact_phone: value('contact_phone'),
+        accepted_food_types: list('accepted_food_types'), accepted_dietary_types: list('accepted_dietary_types'),
+        target_demographics: list('target_demographics'), vehicle_available: form.get('vehicle_available') === 'on'
+      });
+      setAssignmentSuccess(`${ngo.name} is registered and ${ngo.vehicle_available ? `vehicle V-${ngo.id} is ready for matching.` : 'is ready for matching.'}`);
+      setShowRegistration(false);
+      await loadNetwork();
+      if (activeListingId) await runMatching(activeListingId);
+    } catch (err: any) {
+      setRegistrationError(err.message || 'Registration failed. Please check the required fields.');
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -107,7 +159,13 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button onClick={() => { setRegistrationError(null); setShowRegistration(true); }} className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-3 py-2 text-xs font-bold text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 transition">
+              <Plus className="w-4 h-4" /> Register Recipient NGO
+            </button>
+            <button onClick={handleOpenDirectory} className="inline-flex items-center gap-1.5 rounded-xl border border-slate-600 bg-slate-800 px-3 py-2 text-xs font-bold text-slate-200 hover:border-emerald-500/50 transition">
+              <Users className="w-4 h-4" /> NGO Directory
+            </button>
             <span className="text-xs text-slate-400">Select Donation:</span>
             <select
               value={activeListingId}
@@ -124,6 +182,16 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
               ))}
             </select>
           </div>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-cyan-500/25 bg-cyan-950/15 p-4 text-xs text-slate-300">
+        <div className="mb-3 flex items-center gap-2 font-bold text-cyan-200"><BookOpen className="w-4 h-4" /> How Reservation Works</div>
+        <div className="grid gap-3 md:grid-cols-4">
+          <div><span className="font-bold text-white">1. Provider logs surplus</span><p className="mt-1 text-slate-400">POST /api/surplus</p></div>
+          <div><span className="font-bold text-white">2. Smart Matching scores</span><p className="mt-1 text-slate-400">POST /api/matching/recommend</p></div>
+          <div><span className="font-bold text-white">3. NGO reserves it</span><p className="mt-1 text-slate-400">POST /api/deliveries/reserve</p></div>
+          <div><span className="font-bold text-white">4. Track collection</span><p className="mt-1 text-slate-400">GET /api/deliveries</p></div>
         </div>
       </div>
 
@@ -270,7 +338,7 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
                     className="w-full py-3 rounded-xl font-bold text-xs bg-emerald-500 hover:bg-emerald-600 text-slate-950 shadow-lg shadow-emerald-500/30 flex items-center justify-center space-x-2 transition"
                   >
                     <Truck className="w-4 h-4" />
-                    <span>{isAssigning ? 'Assigning...' : 'Assign Donation & Dispatch Route'}</span>
+                    <span>{isAssigning ? 'Reserving...' : 'Reserve & Assign Donation'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -337,7 +405,7 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
                             disabled={isAssigning}
                             className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500 hover:text-slate-950 transition"
                           >
-                            Assign
+                            Reserve & Assign
                           </button>
                         )}
                       </td>
@@ -349,6 +417,41 @@ export const SmartMatching: React.FC<SmartMatchingProps> = ({
           </div>
         </div>
       ) : null}
+
+      {showDirectory && (
+        <div className="fixed inset-0 z-40 flex justify-end bg-slate-950/70" role="dialog" aria-modal="true">
+          <aside className="h-full w-full max-w-2xl overflow-y-auto border-l border-slate-700 bg-slate-900 p-6 shadow-2xl">
+            <div className="mb-5 flex items-center justify-between"><div><h2 className="text-lg font-black text-white">NGO Directory & Network</h2><p className="text-xs text-slate-400">Registered recipients, available capacity, fleet, and priority communities.</p></div><button onClick={() => setShowDirectory(false)} className="rounded-lg p-2 text-slate-300 hover:bg-slate-800"><X /></button></div>
+            <div className="space-y-3">{ngos.map(ngo => { const vehicle = vehicles.find(v => v.ngo_id === ngo.id); return <div key={ngo.id} className="rounded-xl border border-slate-700 bg-slate-950/50 p-4 text-xs"><div className="flex justify-between gap-3"><div><h3 className="font-bold text-white">{ngo.name}</h3><p className="mt-1 text-slate-400">{ngo.district}, {ngo.state}</p></div><span className="font-mono text-emerald-400">{ngo.current_capacity_meals} open</span></div><div className="mt-3 grid gap-2 text-slate-300 sm:grid-cols-2"><p>Fleet: <span className="text-white">{vehicle ? `${vehicle.id} · ${vehicle.capacity_meals} meals` : 'No vehicle assigned'}</span></p><p>Contact: <span className="text-white">{ngo.contact_person}</span></p></div><p className="mt-2 text-slate-400">Beneficiaries: {ngo.target_demographics?.join(', ') || 'Community beneficiaries'}</p></div>; })}</div>
+          </aside>
+        </div>
+      )}
+
+      {showRegistration && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/75 p-4" role="dialog" aria-modal="true">
+          <form onSubmit={handleRegisterNGO} className="my-8 w-full max-w-3xl rounded-2xl border border-emerald-500/35 bg-slate-900 p-6 shadow-2xl">
+            <div className="mb-5 flex items-start justify-between"><div><h2 className="text-xl font-black text-white">Register Recipient NGO</h2><p className="mt-1 text-xs text-slate-400">Registration immediately creates an active fleet vehicle unless you opt out.</p></div><button type="button" onClick={() => setShowRegistration(false)} className="rounded-lg p-2 text-slate-300 hover:bg-slate-800"><X /></button></div>
+            {registrationError && <p className="mb-4 rounded-lg border border-rose-500/40 bg-rose-500/10 p-3 text-xs text-rose-300">{registrationError}</p>}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <input required name="name" placeholder="Organization name *" className="field" />
+              <input required name="contact_person" placeholder="Contact person *" className="field" />
+              <input required name="contact_phone" placeholder="Phone number *" className="field" />
+              <input required name="address" placeholder="Service address *" className="field" />
+              <input required name="district" placeholder="District *" className="field" />
+              <input required name="state" placeholder="State *" className="field" />
+              <input required type="number" step="any" name="latitude" placeholder="Latitude *" className="field" />
+              <input required type="number" step="any" name="longitude" placeholder="Longitude *" className="field" />
+              <input required min="1" type="number" name="daily_capacity_meals" placeholder="Daily meal capacity *" className="field" />
+              <input min="1" type="number" name="service_radius_km" placeholder="Service radius (km, default 15)" className="field" />
+              <input name="accepted_food_types" defaultValue="cooked meals, rice, bread" placeholder="Food types (comma-separated)" className="field sm:col-span-2" />
+              <input name="accepted_dietary_types" defaultValue="vegetarian, mixed" placeholder="Dietary types (comma-separated)" className="field sm:col-span-2" />
+              <input name="target_demographics" placeholder="Beneficiary demographics (comma-separated)" className="field sm:col-span-2" />
+            </div>
+            <label className="mt-4 flex items-center gap-2 text-xs text-slate-300"><input name="vehicle_available" type="checkbox" defaultChecked className="accent-emerald-500" /> Vehicle available — auto-provision dispatch fleet</label>
+            <div className="mt-6 flex justify-end gap-3"><button type="button" onClick={() => setShowRegistration(false)} className="rounded-xl border border-slate-600 px-4 py-2 text-xs font-bold text-slate-200">Cancel</button><button disabled={isRegistering} className="rounded-xl bg-emerald-500 px-4 py-2 text-xs font-bold text-slate-950 disabled:opacity-60">{isRegistering ? 'Registering…' : 'Register NGO & Fleet'}</button></div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

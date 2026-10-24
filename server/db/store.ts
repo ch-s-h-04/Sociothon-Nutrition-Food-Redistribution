@@ -115,6 +115,12 @@ class Store {
     return this.data.vehicles.find(v => v.id === id);
   }
 
+  addVehicle(v: FleetVehicle): FleetVehicle {
+    this.data.vehicles.push(v);
+    this.save();
+    return v;
+  }
+
   updateVehicle(id: string, updates: Partial<FleetVehicle>): FleetVehicle | null {
     const idx = this.data.vehicles.findIndex(v => v.id === id);
     if (idx === -1) return null;

@@ -79,6 +79,8 @@ export const api = {
     getById: (id: string) => fetchJson<DeliveryRecord>(`/deliveries/${id}`),
     assign: (data: { surplus_id: string; ngo_id: string; vehicle_id?: string }) =>
       fetchJson<DeliveryRecord>('/deliveries/assign', { method: 'POST', body: JSON.stringify(data) }),
+    reserve: (data: { surplus_id: string; ngo_id: string; vehicle_id?: string }) =>
+      fetchJson<DeliveryRecord>('/deliveries/reserve', { method: 'POST', body: JSON.stringify(data) }),
     updateStatus: (id: string, status: DeliveryStatus, recovery_pathway?: RecoveryPathway, notes?: string) =>
       fetchJson<DeliveryRecord>(`/deliveries/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, recovery_pathway, notes }) })
   },

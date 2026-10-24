@@ -53,8 +53,9 @@ router.post('/ngos', (req: Request, res: Response) => {
       res.status(400).json({ error: 'Name, latitude, and longitude are required' });
       return;
     }
+    const ngoId = `N${String(store.getNGOs().length + 1).padStart(2, '0')}`;
     const newNgo: RecipientNGO = {
-      id: `N${String(store.getNGOs().length + 1).padStart(2, '0')}`,
+      id: ngoId,
       name,
       latitude: Number(latitude),
       longitude: Number(longitude),
@@ -72,9 +73,29 @@ router.post('/ngos', (req: Request, res: Response) => {
       contact_person: contact_person || 'Coordinator',
       vehicle_available: req.body.vehicle_available !== false,
       reliability_score: 92,
-      active: true
+      active: true,
+      target_demographics: req.body.target_demographics || ['Community Beneficiaries', 'Vulnerable Households']
     };
     const created = store.addNGO(newNgo);
+
+    // If vehicle is available, auto-provision fleet vehicle for dispatch
+    if (newNgo.vehicle_available) {
+      const vehicleId = `V-${ngoId}`;
+      if (!store.getVehicleById(vehicleId)) {
+        store.addVehicle({
+          id: vehicleId,
+          ngo_id: ngoId,
+          driver_name: req.body.driver_name || `${contact_person || 'Dispatch'} Driver`,
+          driver_phone: req.body.driver_phone || contact_phone || '+91 90000 00000',
+          capacity_meals: Number(req.body.vehicle_capacity || Math.min(150, newNgo.daily_capacity_meals)),
+          current_latitude: newNgo.latitude,
+          current_longitude: newNgo.longitude,
+          available_at: new Date().toISOString(),
+          status: 'available'
+        });
+      }
+    }
+
     res.status(201).json(created);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
