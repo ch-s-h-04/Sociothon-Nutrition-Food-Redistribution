@@ -315,6 +315,10 @@ export interface ImpactMetrics {
       elapsed_seconds_2026: number;
       estimated_india_waste_kg_current_year: number;
       kg_per_second_rate: number;
+      annual_baseline_tonnes?: number;
+      confidence_level?: string;
+      scope?: string;
+      source_url?: string;
       note: string;
     };
     ghi_trend: Array<{ year: number; score: number }>;

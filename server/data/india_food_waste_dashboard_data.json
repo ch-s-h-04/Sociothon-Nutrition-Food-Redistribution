@@ -204,13 +204,17 @@
       }
     },
     "live_counter": {
-      "annual_waste_baseline_kg": 78000000000,
-      "calculation": "78,000,000,000 / (365 * 24 * 3600)",
-      "approx_kg_per_second": 2474.8858447488587,
+      "annual_waste_baseline_kg": 78192338000,
+      "annual_household_waste_tonnes": 78192338,
+      "calculation": "78,192,338,000 / (365 * 24 * 3600)",
+      "approx_kg_per_second": 2479.462772704211,
       "start_timestamp": "2026-01-01T00:00:00",
       "display_logic": "elapsed_seconds_since_start_of_2026 × kg_per_second",
       "refresh_interval_ms": 500,
-      "note": "This is a dashboard-derived counter, not a real-time measurement."
+      "confidence_level": "Medium",
+      "scope": "Household food waste estimate only (not total national waste or 2026 actual waste)",
+      "source_url": "https://wedocs.unep.org/items/dbe2cd4c-8384-4636-8359-5847f42b9711",
+      "note": "Modelled statistical projection derived from UNEP Food Waste Index Report 2024 (78,192,338 tonnes/year)."
     }
   },
   "claims_and_context": [

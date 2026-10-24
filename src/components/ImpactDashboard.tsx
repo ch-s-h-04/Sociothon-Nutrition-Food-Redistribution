@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ImpactMetrics } from '../types';
 import { api } from '../utils/api';
+import { IndiaRecoveryMap } from './IndiaRecoveryMap';
+import {
+  UNEP_2024_INDIA_HOUSEHOLD_WASTE_TONNES_PER_YEAR,
+  UNEP_2024_INDIA_HOUSEHOLD_WASTE_KG_PER_SECOND,
+  UNEP_REPORT_CITATION,
+  calculateDeterministicModelledWasteKg
+} from '../utils/unepWasteEstimate';
 import {
   BarChart3,
   TrendingDown,
@@ -18,12 +25,14 @@ import {
   Sprout,
   Truck,
   Scale,
-  Percent
+  Percent,
+  ExternalLink
 } from 'lucide-react';
 
 export const ImpactDashboard: React.FC = () => {
   const [metrics, setMetrics] = useState<ImpactMetrics | null>(null);
-  const [liveCounterKg, setLiveCounterKg] = useState<number>(0);
+  // Deterministic initial value based on elapsed time from start of current year
+  const [liveCounterKg, setLiveCounterKg] = useState<number>(() => calculateDeterministicModelledWasteKg());
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -32,7 +41,6 @@ export const ImpactDashboard: React.FC = () => {
         setLoading(true);
         const data = await api.impact.getMetrics();
         setMetrics(data);
-        setLiveCounterKg(data.macro_context_india.live_waste_tracker.estimated_india_waste_kg_current_year);
       } catch (err) {
         console.error('Failed to load impact metrics:', err);
       } finally {
@@ -41,9 +49,10 @@ export const ImpactDashboard: React.FC = () => {
     }
     loadMetrics();
 
-    // Live counter incrementer (approx 2474.89 kg/sec -> ~247.5 kg every 100ms)
+    // 100ms ticker recalculating deterministically from wall-clock Date.now()
+    // Mathematically derived: 78,192,338 tonnes/yr × 1,000 kg/t ÷ 31,536,000 s/yr = ~2,479.46 kg/s
     const interval = setInterval(() => {
-      setLiveCounterKg(prev => prev + 247.49);
+      setLiveCounterKg(calculateDeterministicModelledWasteKg());
     }, 100);
 
     return () => clearInterval(interval);
@@ -70,20 +79,75 @@ export const ImpactDashboard: React.FC = () => {
             </p>
           </div>
 
-          {/* Live National Wastage Counter */}
-          <div className="bg-slate-950/80 p-4 rounded-xl border border-rose-500/40 shadow-inner text-right shrink-0">
-            <span className="text-[10px] font-mono uppercase text-rose-400 font-bold block flex items-center justify-end gap-1">
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> Live Estimated Food Waste in India (2026)
-            </span>
-            <div className="font-mono font-black text-2xl sm:text-3xl text-rose-300 mt-1">
-              {Math.floor(liveCounterKg).toLocaleString()} <span className="text-sm text-slate-400 font-normal">kg</span>
+          {/* National Household Food Waste Benchmark (UNEP 2024 Modelled Estimate) */}
+          <div className="bg-slate-950/85 p-4 sm:p-5 rounded-xl border border-rose-500/30 shadow-inner shrink-0 max-w-md w-full md:w-auto text-left space-y-2.5">
+            {/* Header Badge & Citation Link */}
+            <div className="flex items-center justify-between gap-2 border-b border-slate-800/80 pb-2">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                <span className="text-[10px] font-mono uppercase text-rose-400 font-bold tracking-wider">
+                  National Benchmark · Modelled Estimate
+                </span>
+              </div>
+              <a
+                href={UNEP_REPORT_CITATION.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] font-mono text-slate-400 hover:text-emerald-400 flex items-center gap-1 transition underline-offset-2 hover:underline"
+                title="View official UNEP Food Waste Index Report 2024"
+              >
+                <span>UNEP 2024</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
-            <span className="text-[10px] text-slate-500 block font-mono mt-0.5">
-              Rate: ~2,475 kg wasted/sec (UNEP 2024 statistical baseline)
-            </span>
+
+            {/* Prominent Verified Annual Baseline */}
+            <div>
+              <span className="text-[11px] text-slate-400 font-medium block">
+                Estimated Annual Household Food Waste in India:
+              </span>
+              <div className="flex items-baseline gap-2 mt-0.5">
+                <span className="text-xl sm:text-2xl font-black text-white font-mono tracking-tight">
+                  78.2 Million Tonnes
+                </span>
+                <span className="text-[11px] font-mono text-slate-400">
+                  ({UNEP_2024_INDIA_HOUSEHOLD_WASTE_TONNES_PER_YEAR.toLocaleString()} t/yr)
+                </span>
+              </div>
+            </div>
+
+            {/* Modelled Cumulative Ticker (2026 Year-to-Date Projection) */}
+            <div className="bg-slate-900/90 rounded-lg p-2.5 border border-slate-800 font-mono">
+              <div className="flex items-center justify-between text-[10px] text-slate-400 mb-0.5">
+                <span>Cumulative 2026 Projection (YTD):</span>
+                <span className="text-rose-400 font-semibold">~{UNEP_2024_INDIA_HOUSEHOLD_WASTE_KG_PER_SECOND.toFixed(2)} kg/s</span>
+              </div>
+              <div className="text-lg sm:text-xl font-black text-rose-300">
+                {Math.floor(liveCounterKg).toLocaleString()} <span className="text-xs text-slate-400 font-normal">kg</span>
+              </div>
+              <p className="text-[9.5px] text-slate-500 leading-tight mt-1">
+                Modelled projection assuming uniform rate (78.2 MT ÷ 31.54M s). Not live-measured waste.
+              </p>
+            </div>
+
+            {/* Context, Scope & Confidence Level Note */}
+            <div className="flex items-start gap-1.5 text-[10px] text-slate-400 bg-slate-900/50 p-2 rounded-lg border border-slate-800/60 leading-normal">
+              <Info className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+              <div className="space-y-0.5">
+                <div>
+                  <strong className="text-slate-300">Scope:</strong> Household consumption only (Medium Confidence).
+                </div>
+                <div>
+                  Excludes retail, commercial catering & pre-harvest loss. Independent from audited platform records below.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* India Food Recovery Network Map (Geographical Coordination ReRoute Component) */}
+      <IndiaRecoveryMap />
 
       {/* Verified Platform Operational Waste Stream (Primary Grid) */}
       <div className="bg-slate-900 p-6 rounded-2xl border border-emerald-500/30 shadow-xl space-y-5">
@@ -294,10 +358,10 @@ export const ImpactDashboard: React.FC = () => {
           <div className="space-y-3 font-mono text-xs">
             <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-800 flex justify-between items-center">
               <div>
-                <span className="text-slate-400 block">Annual Food Wasted (India)</span>
-                <span className="text-lg font-bold text-white">78 Million Tonnes</span>
+                <span className="text-slate-400 block">Annual Household Food Waste (India)</span>
+                <span className="text-lg font-bold text-white">78.2 Million Tonnes</span>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-400">UNEP 2024</span>
+              <span className="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-mono">UNEP 2024</span>
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-800 flex justify-between items-center">

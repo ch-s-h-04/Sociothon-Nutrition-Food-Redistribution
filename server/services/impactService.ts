@@ -7,6 +7,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, '..', 'data');
 
+// UNEP Food Waste Index Report 2024 Benchmark Constants
+export const UNEP_2024_INDIA_HOUSEHOLD_WASTE_TONNES_PER_YEAR = 78_192_338;
+export const KG_PER_METRIC_TONNE = 1_000;
+export const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; // 31,536,000 seconds
+export const UNEP_2024_INDIA_HOUSEHOLD_WASTE_KG_PER_YEAR =
+  UNEP_2024_INDIA_HOUSEHOLD_WASTE_TONNES_PER_YEAR * KG_PER_METRIC_TONNE;
+export const UNEP_2024_INDIA_HOUSEHOLD_WASTE_KG_PER_SECOND =
+  UNEP_2024_INDIA_HOUSEHOLD_WASTE_KG_PER_YEAR / SECONDS_PER_YEAR;
+
 function loadFoodWasteData() {
   const filePath = path.join(DATA_DIR, 'india_food_waste_dashboard_data.json');
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -71,12 +80,12 @@ export function getPlatformImpactMetrics() {
     .filter(d => d.status === 'delivered' || d.status === 'diverted_to_compost')
     .reduce((sum, d) => sum + d.environmental_impact.economic_value_inr, 0);
 
-  // Live counter calculation (from UNEP / NABCONS baseline)
-  // Annual baseline: 78,000,000,000 kg/year -> 2474.8858 kg/sec
-  const startOfYear = new Date('2026-01-01T00:00:00Z').getTime();
+  // Modelled statistical projection derived mathematically from UNEP Food Waste Index 2024
+  // Baseline: 78,192,338 tonnes/year -> 78,192,338,000 kg ÷ 31,536,000 seconds = ~2,479.4628 kg/sec
+  const startOfYear = Date.UTC(2026, 0, 1, 0, 0, 0);
   const now = Date.now();
   const elapsedSeconds = Math.max(0, (now - startOfYear) / 1000);
-  const estimatedIndiaWasteSinceStartOfYearKg = Math.round(elapsedSeconds * 2474.8858);
+  const estimatedIndiaWasteSinceStartOfYearKg = Math.round(elapsedSeconds * UNEP_2024_INDIA_HOUSEHOLD_WASTE_KG_PER_SECOND);
 
   return {
     operational_impact: {
@@ -116,8 +125,12 @@ export function getPlatformImpactMetrics() {
       live_waste_tracker: {
         elapsed_seconds_2026: Math.round(elapsedSeconds),
         estimated_india_waste_kg_current_year: estimatedIndiaWasteSinceStartOfYearKg,
-        kg_per_second_rate: 2474.89,
-        note: 'Dashboard-derived statistical projection based on UNEP Food Waste Index 2024 (78 MT/yr).'
+        kg_per_second_rate: Number(UNEP_2024_INDIA_HOUSEHOLD_WASTE_KG_PER_SECOND.toFixed(2)),
+        annual_baseline_tonnes: UNEP_2024_INDIA_HOUSEHOLD_WASTE_TONNES_PER_YEAR,
+        confidence_level: 'Medium',
+        scope: 'Household food waste estimate only (not total national waste or 2026 actual waste)',
+        source_url: 'https://wedocs.unep.org/items/dbe2cd4c-8384-4636-8359-5847f42b9711',
+        note: 'Modelled statistical projection assuming constant rate derived from UNEP Food Waste Index 2024 (78,192,338 tonnes/year).'
       },
       ghi_trend: rawData.data.ghi_trend || [],
       ghi_indicators: rawData.data.ghi_india_indicators_2025 || [],
