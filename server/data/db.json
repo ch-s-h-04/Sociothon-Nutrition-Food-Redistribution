@@ -1,0 +1,461 @@
+{
+  "restaurants": [
+    {
+      "id": "R01",
+      "name": "Saffron Courtyard & Canteen",
+      "type": "restaurant",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "address": "42 MG Road, Central Bengaluru",
+      "district": "Bengaluru Urban",
+      "state": "Karnataka",
+      "operating_hours": "08:00–23:00",
+      "contact_phone": "+91 98450 11234",
+      "contact_email": "saffron@reroute-demo.org",
+      "food_preferences": [
+        "cooked meals",
+        "rice",
+        "vegetables"
+      ],
+      "historical_surplus": 45,
+      "average_daily_orders": 380,
+      "reliability_score": 94,
+      "active": true
+    },
+    {
+      "id": "R02",
+      "name": "Satpura Community Kitchen",
+      "type": "canteen",
+      "latitude": 21.3667,
+      "longitude": 74.2333,
+      "address": "Station Road, Shahada",
+      "district": "Nandurbar",
+      "state": "Maharashtra",
+      "operating_hours": "07:00–21:30",
+      "contact_phone": "+91 94220 88765",
+      "contact_email": "satpura.kitchen@reroute-demo.org",
+      "food_preferences": [
+        "cooked meals",
+        "rice",
+        "bread"
+      ],
+      "historical_surplus": 60,
+      "average_daily_orders": 500,
+      "reliability_score": 91,
+      "active": true
+    },
+    {
+      "id": "R03",
+      "name": "Chotanagpur Heritage Hotel",
+      "type": "hotel",
+      "latitude": 22.65,
+      "longitude": 85.82,
+      "address": "Court Compound, Chaibasa",
+      "district": "Pashchimi Singhbhum",
+      "state": "Jharkhand",
+      "operating_hours": "06:30–23:00",
+      "contact_phone": "+91 93340 76543",
+      "contact_email": "chaibasa.heritage@reroute-demo.org",
+      "food_preferences": [
+        "cooked meals",
+        "rice",
+        "mixed meals"
+      ],
+      "historical_surplus": 52,
+      "average_daily_orders": 320,
+      "reliability_score": 88,
+      "active": true
+    },
+    {
+      "id": "R04",
+      "name": "Awadh Royal Banquet Hall",
+      "type": "restaurant",
+      "latitude": 27.58,
+      "longitude": 81.6,
+      "address": "Hospital Road, Nanpara Circle",
+      "district": "Bahraich",
+      "state": "Uttar Pradesh",
+      "operating_hours": "10:00–23:30",
+      "contact_phone": "+91 95590 33421",
+      "contact_email": "awadh.royal@reroute-demo.org",
+      "food_preferences": [
+        "cooked meals",
+        "bread",
+        "rice"
+      ],
+      "historical_surplus": 75,
+      "average_daily_orders": 450,
+      "reliability_score": 89,
+      "active": true
+    },
+    {
+      "id": "R05",
+      "name": "Malwa Organic Farmers Table",
+      "type": "cafe",
+      "latitude": 22.28,
+      "longitude": 74.35,
+      "address": "Main Market Road",
+      "district": "Alirajpur",
+      "state": "Madhya Pradesh",
+      "operating_hours": "08:30–22:00",
+      "contact_phone": "+91 98260 55112",
+      "contact_email": "malwa.table@reroute-demo.org",
+      "food_preferences": [
+        "vegetables",
+        "bread",
+        "cooked meals"
+      ],
+      "historical_surplus": 34,
+      "average_daily_orders": 210,
+      "reliability_score": 92,
+      "active": true
+    },
+    {
+      "id": "R06",
+      "name": "Terrace Bistro & Bakehouse",
+      "type": "cafe",
+      "latitude": 12.9352,
+      "longitude": 77.6245,
+      "address": "80 Feet Road, Koramangala",
+      "district": "Bengaluru Urban",
+      "state": "Karnataka",
+      "operating_hours": "09:00–23:00",
+      "contact_phone": "+91 98860 99887",
+      "contact_email": "terrace.bistro@reroute-demo.org",
+      "food_preferences": [
+        "bakery",
+        "packaged food",
+        "mixed meals"
+      ],
+      "historical_surplus": 28,
+      "average_daily_orders": 290,
+      "reliability_score": 95,
+      "active": true
+    }
+  ],
+  "ngos": [
+    {
+      "id": "N01",
+      "name": "Asha Poshan Collective",
+      "latitude": 21.37,
+      "longitude": 74.24,
+      "address": "Tribal Welfare Complex, Shahada Block",
+      "district": "Nandurbar",
+      "state": "Maharashtra",
+      "service_radius_km": 18,
+      "daily_capacity_meals": 250,
+      "current_capacity_meals": 180,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "bread",
+        "vegetables",
+        "mixed meals"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "vegan",
+        "mixed",
+        "non_vegetarian"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "cold_storage",
+        "hot_holding"
+      ],
+      "operating_hours": "07:00–22:00",
+      "contact_phone": "+91 94225 11002",
+      "contact_person": "Sunita Patil",
+      "vehicle_available": true,
+      "reliability_score": 96,
+      "active": true,
+      "target_demographics": [
+        "Under-5 Children",
+        "Pregnant & Lactating Mothers",
+        "Tribal Hamlets"
+      ]
+    },
+    {
+      "id": "N02",
+      "name": "Ho Adidharmi Seva Trust",
+      "latitude": 22.655,
+      "longitude": 85.825,
+      "address": "Near Old Bus Stand, Chaibasa",
+      "district": "Pashchimi Singhbhum",
+      "state": "Jharkhand",
+      "service_radius_km": 22,
+      "daily_capacity_meals": 300,
+      "current_capacity_meals": 220,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "vegetables",
+        "mixed meals"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "mixed",
+        "non_vegetarian"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "hot_holding"
+      ],
+      "operating_hours": "08:00–21:30",
+      "contact_phone": "+91 93348 22119",
+      "contact_person": "Birsa Munda Jr.",
+      "vehicle_available": true,
+      "reliability_score": 93,
+      "active": true,
+      "target_demographics": [
+        "Severely Anemic Children",
+        "Rural Forest Villages"
+      ]
+    },
+    {
+      "id": "N03",
+      "name": "Sarvodaya Bal Seva Kendra",
+      "latitude": 27.585,
+      "longitude": 81.605,
+      "address": "Civil Lines, Nanpara Road",
+      "district": "Bahraich",
+      "state": "Uttar Pradesh",
+      "service_radius_km": 15,
+      "daily_capacity_meals": 200,
+      "current_capacity_meals": 140,
+      "accepted_food_types": [
+        "cooked meals",
+        "bread",
+        "rice",
+        "vegetables"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "mixed"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "hot_holding"
+      ],
+      "operating_hours": "08:00–21:00",
+      "contact_phone": "+91 95594 44321",
+      "contact_person": "Ramakant Shukla",
+      "vehicle_available": true,
+      "reliability_score": 90,
+      "active": true,
+      "target_demographics": [
+        "Malnourished School Children",
+        "Flood Vulnerable Families"
+      ]
+    },
+    {
+      "id": "N04",
+      "name": "Bangalore Food Bank & Care Net",
+      "latitude": 12.965,
+      "longitude": 77.6,
+      "address": "Shanti Nagar Hub, Central Zone",
+      "district": "Bengaluru Urban",
+      "state": "Karnataka",
+      "service_radius_km": 12,
+      "daily_capacity_meals": 350,
+      "current_capacity_meals": 260,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "bread",
+        "vegetables",
+        "packaged food",
+        "bakery",
+        "mixed meals"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "vegan",
+        "mixed",
+        "non_vegetarian"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "cold_storage",
+        "hot_holding"
+      ],
+      "operating_hours": "08:00–23:00",
+      "contact_phone": "+91 98452 77881",
+      "contact_person": "Meera Krishnan",
+      "vehicle_available": true,
+      "reliability_score": 97,
+      "active": true,
+      "target_demographics": [
+        "Migrant Labor Colonies",
+        "Slum Daycare Centers"
+      ]
+    },
+    {
+      "id": "N05",
+      "name": "Vanvasi Vikas Samiti",
+      "latitude": 22.285,
+      "longitude": 74.355,
+      "address": "Patel Colony, Alirajpur Bypass",
+      "district": "Alirajpur",
+      "state": "Madhya Pradesh",
+      "service_radius_km": 20,
+      "daily_capacity_meals": 180,
+      "current_capacity_meals": 130,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "bread",
+        "vegetables"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "vegan",
+        "mixed"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "hot_holding"
+      ],
+      "operating_hours": "07:30–21:00",
+      "contact_phone": "+91 98263 77890",
+      "contact_person": "Govind Rathwa",
+      "vehicle_available": true,
+      "reliability_score": 92,
+      "active": true,
+      "target_demographics": [
+        "Aspirational Block Anganwadis",
+        "Tribal Children"
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "V-N01",
+      "ngo_id": "N01",
+      "driver_name": "Dinesh Pawar",
+      "driver_phone": "+91 94220 11982",
+      "capacity_meals": 120,
+      "current_latitude": 21.371,
+      "current_longitude": 74.241,
+      "available_at": "2026-10-24T05:23:03.659Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N02",
+      "ngo_id": "N02",
+      "driver_name": "Suren Murmu",
+      "driver_phone": "+91 93340 55192",
+      "capacity_meals": 150,
+      "current_latitude": 22.656,
+      "current_longitude": 85.826,
+      "available_at": "2026-10-24T05:23:03.660Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N03",
+      "ngo_id": "N03",
+      "driver_name": "Mohd. Salim",
+      "driver_phone": "+91 95590 77123",
+      "capacity_meals": 100,
+      "current_latitude": 27.586,
+      "current_longitude": 81.606,
+      "available_at": "2026-10-24T05:23:03.660Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N04",
+      "ngo_id": "N04",
+      "driver_name": "Chetan Gowda",
+      "driver_phone": "+91 98450 33412",
+      "capacity_meals": 160,
+      "current_latitude": 12.966,
+      "current_longitude": 77.601,
+      "available_at": "2026-10-24T05:23:03.660Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N05",
+      "ngo_id": "N05",
+      "driver_name": "Kailash Bhil",
+      "driver_phone": "+91 98260 22319",
+      "capacity_meals": 110,
+      "current_latitude": 22.286,
+      "current_longitude": 74.356,
+      "available_at": "2026-10-24T05:23:03.660Z",
+      "status": "available"
+    }
+  ],
+  "surplusEvents": [
+    {
+      "id": "S-01",
+      "restaurant_id": "R02",
+      "donor_name": "Satpura Community Kitchen",
+      "pickup_address": "Station Road, Shahada",
+      "pickup_district": "Nandurbar",
+      "pickup_state": "Maharashtra",
+      "latitude": 21.3667,
+      "longitude": 74.2333,
+      "food_type": "cooked meals",
+      "dietary_type": "vegetarian",
+      "quantity_meals": 65,
+      "food_weight_kg": 24.7,
+      "storage_requirement": "hot_holding",
+      "created_at": "2026-10-24T05:03:03.660Z",
+      "available_at": "2026-10-24T05:13:03.660Z",
+      "expiry_at": "2026-10-24T07:13:03.660Z",
+      "contact_name": "Ganesh Shinde",
+      "contact_phone": "+91 94220 88765",
+      "confidence": 92,
+      "status": "available",
+      "notes": "Hot dal tadka with fortified rice and drumstick leaves curry."
+    },
+    {
+      "id": "S-02",
+      "restaurant_id": "R03",
+      "donor_name": "Chotanagpur Heritage Hotel",
+      "pickup_address": "Court Compound, Chaibasa",
+      "pickup_district": "Pashchimi Singhbhum",
+      "pickup_state": "Jharkhand",
+      "latitude": 22.65,
+      "longitude": 85.82,
+      "food_type": "cooked meals",
+      "dietary_type": "mixed",
+      "quantity_meals": 50,
+      "food_weight_kg": 19,
+      "storage_requirement": "hot_holding",
+      "created_at": "2026-10-24T04:53:03.660Z",
+      "available_at": "2026-10-24T05:08:03.660Z",
+      "expiry_at": "2026-10-24T07:08:03.660Z",
+      "contact_name": "Anup Tirkey",
+      "contact_phone": "+91 93340 76543",
+      "confidence": 89,
+      "status": "available",
+      "notes": "Rice, horsegram dal, spinach stir fry, and egg curry."
+    },
+    {
+      "id": "S-03",
+      "restaurant_id": "R01",
+      "donor_name": "Saffron Courtyard & Canteen",
+      "pickup_address": "42 MG Road, Central Bengaluru",
+      "pickup_district": "Bengaluru Urban",
+      "pickup_state": "Karnataka",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "food_type": "cooked meals",
+      "dietary_type": "vegetarian",
+      "quantity_meals": 45,
+      "food_weight_kg": 17.1,
+      "storage_requirement": "hot_holding",
+      "created_at": "2026-10-24T04:43:03.660Z",
+      "available_at": "2026-10-24T05:03:03.660Z",
+      "expiry_at": "2026-10-24T06:43:03.660Z",
+      "contact_name": "Ramesh Hegde",
+      "contact_phone": "+91 98450 11234",
+      "confidence": 94,
+      "status": "available",
+      "notes": "Steamed rice, mixed vegetable sambar, and ragi mudde."
+    }
+  ],
+  "deliveries": [],
+  "lastUpdated": "2026-10-24T05:23:03.683Z"
+}

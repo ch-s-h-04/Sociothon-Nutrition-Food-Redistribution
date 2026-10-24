@@ -1,0 +1,323 @@
+{
+  "dashboard": {
+    "title": "The Data Behind the Paradox",
+    "topic": "India · Food Waste Crisis",
+    "tabs": [
+      "The Paradox",
+      "Who Wastes What",
+      "India vs World",
+      "GHI Trend",
+      "The Opportunity"
+    ],
+    "scope": "India food waste, food-service waste, global comparison, hunger indicators, and recovery opportunity."
+  },
+  "data": {
+    "paradox": {
+      "annual_food_waste_india": {
+        "value": 78,
+        "unit": "million tonnes/year",
+        "label": "Food wasted in India"
+      },
+      "people_who_could_be_fed": {
+        "value": 194,
+        "unit": "million people",
+        "label": "People who could be fed"
+      },
+      "food_service_sector_waste_india": {
+        "value": 11.9,
+        "unit": "million tonnes/year",
+        "label": "Food service sector wastage"
+      },
+      "recoverable_meals_estimate": {
+        "value": 80,
+        "unit": "million people fed",
+        "label": "Meals recoverable (estimate)"
+      },
+      "annual_target_for_live_counter": {
+        "value": 78,
+        "unit": "million tonnes",
+        "label": "Annual food-waste target"
+      },
+      "global_hunger_index_2025": {
+        "rank": 102,
+        "out_of": 123,
+        "score": 25.8,
+        "category": "serious"
+      }
+    },
+    "sector_waste_share_global": [
+      {
+        "sector": "Households",
+        "share_percent": 60
+      },
+      {
+        "sector": "Food Services",
+        "share_percent": 28
+      },
+      {
+        "sector": "Retail",
+        "share_percent": 12
+      }
+    ],
+    "food_service_breakdown": [
+      {
+        "type": "Pre-consumer (preparation waste)",
+        "share_percent": 45
+      },
+      {
+        "type": "Plate waste (uneaten food)",
+        "share_percent": 35
+      },
+      {
+        "type": "Post-consumer (takeaway not eaten)",
+        "share_percent": 20
+      }
+    ],
+    "india_vs_world_annual_food_waste": [
+      {
+        "country": "China",
+        "waste_million_tonnes_per_year": 108
+      },
+      {
+        "country": "India",
+        "waste_million_tonnes_per_year": 79
+      },
+      {
+        "country": "USA",
+        "waste_million_tonnes_per_year": 42
+      },
+      {
+        "country": "Brazil",
+        "waste_million_tonnes_per_year": 24
+      },
+      {
+        "country": "Japan",
+        "waste_million_tonnes_per_year": 8
+      }
+    ],
+    "global_metrics": {
+      "global_food_waste": {
+        "value": 1.05,
+        "unit": "billion tonnes/year"
+      },
+      "india_share_of_global_food_waste": {
+        "value": 7.5,
+        "unit": "percent",
+        "approximate": true
+      },
+      "economic_loss_india": {
+        "value": 1.52,
+        "unit": "lakh crore INR/year",
+        "display_value": "₹1.52 lakh crore/year"
+      },
+      "india_per_capita_food_waste": {
+        "value": 55,
+        "unit": "kg/person/year"
+      }
+    },
+    "ghi_trend": [
+      {
+        "year": 2020,
+        "score": 27.2
+      },
+      {
+        "year": 2021,
+        "score": 27.5
+      },
+      {
+        "year": 2022,
+        "score": 29.1
+      },
+      {
+        "year": 2023,
+        "score": 28.7
+      },
+      {
+        "year": 2024,
+        "score": 27.3
+      },
+      {
+        "year": 2025,
+        "score": 25.8
+      }
+    ],
+    "ghi_india_indicators_2025": [
+      {
+        "indicator": "Children under 5 stunted",
+        "value": 35.5,
+        "unit": "percent"
+      },
+      {
+        "indicator": "Children under 5 acutely wasted",
+        "value": 18.7,
+        "unit": "percent"
+      },
+      {
+        "indicator": "Population undernourished",
+        "value": 13.7,
+        "unit": "percent"
+      },
+      {
+        "indicator": "Under-5 mortality rate",
+        "value": 2.9,
+        "unit": "percent"
+      }
+    ],
+    "opportunity": {
+      "food_service_annual_waste": {
+        "value": 11.9,
+        "unit": "million tonnes/year"
+      },
+      "recovery_scenario": {
+        "recovery_rate": 10,
+        "recovery_rate_unit": "percent",
+        "claimed_meals": 1.19,
+        "claimed_meals_unit": "billion meals",
+        "claimed_value_saved": 15200,
+        "claimed_value_saved_unit": "crore INR"
+      },
+      "recoverable_waste_by_food_service_stage": [
+        {
+          "stage": "Restaurants",
+          "recoverable": 5.2,
+          "unit": "million tonnes"
+        },
+        {
+          "stage": "Hotels",
+          "recoverable": 3.1,
+          "unit": "million tonnes"
+        },
+        {
+          "stage": "Cafes",
+          "recoverable": 1.8,
+          "unit": "million tonnes"
+        },
+        {
+          "stage": "Canteens",
+          "recoverable": 1.8,
+          "unit": "million tonnes"
+        }
+      ],
+      "restaurants_in_india": {
+        "value": 7.5,
+        "unit": "million+"
+      }
+    },
+    "live_counter": {
+      "annual_waste_baseline_kg": 78000000000,
+      "calculation": "78,000,000,000 / (365 * 24 * 3600)",
+      "approx_kg_per_second": 2474.8858447488587,
+      "start_timestamp": "2026-01-01T00:00:00",
+      "display_logic": "elapsed_seconds_since_start_of_2026 × kg_per_second",
+      "refresh_interval_ms": 500,
+      "note": "This is a dashboard-derived counter, not a real-time measurement."
+    }
+  },
+  "claims_and_context": [
+    {
+      "claim": "India is the 2nd largest food waster globally and generates 78–80 million tonnes annually.",
+      "source_label": "UNEP Food Waste Index 2024",
+      "source_url": "https://www.unep.org/resources/report/unep-food-waste-index-report-2024"
+    },
+    {
+      "claim": "India has among the lowest per-capita food waste at 55 kg/person/year.",
+      "source_label": "UNEP Food Waste Index 2024",
+      "source_url": "https://www.unep.org/resources/report/unep-food-waste-index-report-2024"
+    },
+    {
+      "claim": "Global food waste is 1.05 billion tonnes/year.",
+      "source_label": "UNEP Food Waste Index 2024",
+      "source_url": "https://www.unep.org/resources/report/unep-food-waste-index-report-2024"
+    },
+    {
+      "claim": "India's share of global food waste is approximately 7.5%.",
+      "source_label": "UNEP Food Waste Index 2024",
+      "source_url": "https://www.unep.org/resources/report/unep-food-waste-index-report-2024"
+    },
+    {
+      "claim": "India's economic loss from food waste is ₹1.52 lakh crore/year.",
+      "source_label": "NABCONS 2022",
+      "source_url": "https://www.unep.org/resources/report/unep-food-waste-index-report-2024",
+      "note": "The dashboard attributes this figure to NABCONS 2022, while the displayed source link is the UNEP report URL."
+    },
+    {
+      "claim": "Households account for 60%, food services 28%, and retail 12% of food waste.",
+      "source_label": "UNEP Food Waste Index Report 2024",
+      "source_url": "https://www.unep.org/resources/report/unep-food-waste-index-report-2024"
+    },
+    {
+      "claim": "Food service waste in India is 11.9 million tonnes/year.",
+      "source_label": "HPG Consulting Analysis / UNEP Food Waste Index Report 2024",
+      "source_url": "https://hpgconsulting.com/food-beverage-consultants/food-waste-in-the-restaurant-industry-in-india/"
+    },
+    {
+      "claim": "Food service waste breakdown is 45% pre-consumer, 35% plate waste, and 20% post-consumer takeaway waste.",
+      "source_label": "HPG Consulting Analysis",
+      "source_url": "https://hpgconsulting.com/food-beverage-consultants/food-waste-in-the-restaurant-industry-in-india/"
+    },
+    {
+      "claim": "India ranked 102/123 in the Global Hunger Index 2025 with a score of 25.8 and remains in the serious category.",
+      "source_label": "Global Hunger Index 2025",
+      "source_url": "https://www.globalhungerindex.org/india.html"
+    },
+    {
+      "claim": "GHI score improved from 29.1 in 2022 to 25.8 in 2025.",
+      "source_label": "Global Hunger Index 2024 & 2025 — Concern Worldwide & Welthungerhilfe",
+      "source_url": "https://www.globalhungerindex.org/india.html"
+    },
+    {
+      "claim": "Children under 5 stunted: 35.5%; acutely wasted: 18.7%; population undernourished: 13.7%; under-5 mortality: 2.9%.",
+      "source_label": "Global Hunger Index 2025",
+      "source_url": "https://www.globalhungerindex.org/india.html"
+    },
+    {
+      "claim": "Food service sector generates 11.9 million tonnes of food waste annually and recovering 10% is claimed to provide 11.9 billion meals.",
+      "source_label": "UNEP 2021 · FSSAI · NRA India estimates",
+      "source_url": "https://wri-india.org/perspectives/defining-food-waste-sustainable-food-systems"
+    },
+    {
+      "claim": "The dashboard claims current NGO-restaurant matching is manual/reactive and that predictive surplus alerts plus AI-optimized dispatch could reduce pickup time from hours to under 30 minutes and increase recovery from ~2% to 10%+.",
+      "source_label": "Dashboard narrative",
+      "source_url": "https://wri-india.org/perspectives/defining-food-waste-sustainable-food-systems",
+      "note": "These are presented as product/opportunity claims in the supplied dashboard source; they should not be treated as independently verified empirical results."
+    }
+  ],
+  "source_registry": [
+    {
+      "id": "unep_food_waste_index_2024",
+      "name": "UNEP Food Waste Index Report 2024",
+      "url": "https://www.unep.org/resources/report/unep-food-waste-index-report-2024"
+    },
+    {
+      "id": "hpg_food_service_analysis",
+      "name": "HPG Consulting — Food Waste in the Restaurant Industry in India",
+      "url": "https://hpgconsulting.com/food-beverage-consultants/food-waste-in-the-restaurant-industry-in-india/"
+    },
+    {
+      "id": "global_hunger_index_india",
+      "name": "Global Hunger Index — India",
+      "url": "https://www.globalhungerindex.org/india.html"
+    },
+    {
+      "id": "wri_india_food_waste",
+      "name": "WRI India — Defining Food Waste for Sustainable Food Systems",
+      "url": "https://wri-india.org/perspectives/defining-food-waste-sustainable-food-systems"
+    }
+  ],
+  "dashboard_implementation_notes": {
+    "interactive_elements": [
+      "Tab navigation across five views",
+      "Live 2026 food-waste counter updating every 500 ms",
+      "Hover interaction on sector donut chart",
+      "Hover interaction on sector breakdown and comparison charts",
+      "Tooltips showing labels and values"
+    ],
+    "important_semantic_notes": [
+      "Lower GHI score is better.",
+      "The live waste counter is calculated from an annual 78 million tonne baseline.",
+      "The 79 million tonne India value in the country comparison differs slightly from the 78 million tonne headline value used elsewhere in the dashboard.",
+      "The dashboard uses both 78 million and 78–80 million tonnes for India's annual food waste.",
+      "The opportunity section contains estimates/claims and should be labeled as such by an AI dashboard generator."
+    ]
+  }
+}
