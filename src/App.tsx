@@ -13,7 +13,7 @@ import { SurplusEvent, DistrictSummary } from './types';
 import { Heart, Github, ExternalLink } from 'lucide-react';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<string>('wizard');
+  const [activeTab, setActiveTab] = useState<string>('impact');
   const [surplusListings, setSurplusListings] = useState<SurplusEvent[]>([]);
   const [districts, setDistricts] = useState<DistrictSummary[]>([]);
   const [selectedSurplusId, setSelectedSurplusId] = useState<string>('');
@@ -147,16 +147,16 @@ export function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-center md:text-left">
             <p className="font-bold text-slate-300">
-              Sociothon — Unified Nutrition Intelligence & Surplus Food Redistribution Platform
+              Sociothon 2026 — Smart Food Waste Prevention, Recovery & Redistribution Platform
             </p>
             <p className="text-[11px] text-slate-500">
-              Integrates, unifies, and advances open components from{' '}
+              Sociothon 2026 (NSS IIT Roorkee) · Smart & Sustainable Waste Management Challenge · Unifying open components from{' '}
               <a href="https://github.com/Dishank-Sen/Anya" target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline">
-                Anya (Dishank-Sen/Anya)
+                Anya
               </a>{' '}
               and{' '}
               <a href="https://github.com/Dishank-Sen/ReRoute" target="_blank" rel="noreferrer" className="text-teal-400 hover:underline">
-                ReRoute (Dishank-Sen/ReRoute)
+                ReRoute
               </a>.
             </p>
           </div>
@@ -167,7 +167,7 @@ export function App() {
               NFHS-5 Factsheets Verified
             </span>
             <span className="text-slate-600">|</span>
-            <span className="text-slate-400">UNEP 2024 Standards</span>
+            <span className="text-slate-400">UNEP / EPA WARM Accounting</span>
           </div>
         </div>
       </footer>

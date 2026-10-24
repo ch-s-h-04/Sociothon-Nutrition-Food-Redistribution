@@ -101,3 +101,66 @@ test('End-to-End Workflow: Nutrition Data -> Risk Prioritization -> Surplus Regi
   assert.ok(impact.operational_impact.environmental_offsets.water_footprint_saved_liters > 0, 'Water footprint saved');
   assert.ok(impact.macro_context_india.live_waste_tracker.estimated_india_waste_kg_current_year > 0, 'Live waste counter active');
 });
+
+test('Sociothon 2026: Multi-Pathway Recovery, Composting Diversion & Food Safety Guard', () => {
+  store.reset();
+
+  const now = Date.now();
+
+  // 1. Create a batch that has expired (safe consumption window passed)
+  const expiredSurplus = createSurplusListing({
+    donor_name: 'IIT Dining Hall Canteen',
+    pickup_address: 'Central Campus Mess',
+    pickup_district: 'Nandurbar',
+    pickup_state: 'Maharashtra',
+    latitude: 21.37,
+    longitude: 74.24,
+    food_type: 'cooked meals',
+    dietary_type: 'vegetarian',
+    quantity_meals: 100, // 38 kg
+    storage_requirement: 'ambient',
+    available_at: new Date(now - 7200000).toISOString(),
+    expiry_at: new Date(now - 1800000).toISOString(), // expired 30 mins ago
+    contact_name: 'Mess Supervisor',
+    contact_phone: '+91 98888 12345',
+    notes: 'Leftover rice and vegetable stew.'
+  });
+
+  assert.equal(expiredSurplus.food_weight_kg, 38);
+
+  // Assign to NGO
+  const ngos = store.getNGOs();
+  const delivery = assignDonationToNGO({
+    surplus_id: expiredSurplus.id,
+    ngo_id: ngos[0].id
+  });
+
+  updateDeliveryStatus(delivery.id, 'in_transit');
+
+  // Verify FOOD SAFETY ENFORCEMENT: Cannot deliver expired food for human consumption
+  assert.throws(
+    () => updateDeliveryStatus(delivery.id, 'delivered'),
+    /Food Safety Violation.*cannot be redistributed for human consumption/
+  );
+
+  // Safe Multi-Pathway Diversion: Divert batch to aerobic bio-composting
+  const compostedDelivery = updateDeliveryStatus(
+    delivery.id, 
+    'diverted_to_compost', 
+    'composting_resource_recovery', 
+    'Diverted to organic farm bio-composter.'
+  );
+
+  assert.equal(compostedDelivery.status, 'diverted_to_compost');
+  assert.equal(compostedDelivery.recovery_pathway, 'composting_resource_recovery');
+  assert.ok(compostedDelivery.environmental_impact.compost_generated_kg > 0, 'Compost soil yield recorded');
+  assert.equal(compostedDelivery.environmental_impact.compost_generated_kg, 9.5); // 38 kg * 0.25 = 9.5 kg
+  assert.equal(compostedDelivery.environmental_impact.co2_avoided_kg, 32.3); // 38 kg * 0.85 = 32.3 kg CO2e avoided methane
+
+  // Verify impact calculation reflects composting
+  const impact = getPlatformImpactMetrics();
+  assert.equal(impact.operational_impact.diverted_to_compost_count, 1);
+  assert.equal(impact.operational_impact.composted_kg, 38);
+  assert.equal(impact.operational_impact.compost_yield_kg, 9.5);
+  assert.ok(impact.operational_impact.recovery_rate_pct > 0, 'Recovery rate calculated');
+});

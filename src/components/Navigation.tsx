@@ -29,14 +29,14 @@ export const Navigation: React.FC<NavigationProps> = ({
   isResetting
 }) => {
   const navItems = [
-    { id: 'nutrition', label: 'Nutrition Intelligence', icon: Activity, badge: null, tag: 'Anya' },
-    { id: 'surplus', label: 'Surplus Management', icon: UtensilsCrossed, badge: activeSurplusCount > 0 ? activeSurplusCount : null, tag: 'ReRoute' },
-    { id: 'matching', label: 'Smart NGO Matching', icon: HeartHandshake, badge: 'Unified', tag: 'Core' },
-    { id: 'routing', label: 'Fleet & Route Engine', icon: Route, badge: null, tag: 'ReRoute' },
-    { id: 'delivery', label: 'Delivery Tracking', icon: Truck, badge: inTransitDeliveriesCount > 0 ? `${inTransitDeliveriesCount} live` : null, tag: 'ReRoute' },
-    { id: 'impact', label: 'The Paradox & Impact', icon: BarChart3, badge: null, tag: 'UNEP/GHI' },
-    { id: 'planner', label: 'Fortify & Meal Planner', icon: PackageCheck, badge: null, tag: 'Anya' },
-    { id: 'wizard', label: 'Guided Hackathon Demo', icon: Sparkles, badge: 'Judge Tour', tag: 'Demo', special: true },
+    { id: 'impact', label: 'Waste Monitoring & Impact', icon: BarChart3, badge: null, tag: 'UNEP/WARM' },
+    { id: 'surplus', label: 'Surplus Prevention & Logging', icon: UtensilsCrossed, badge: activeSurplusCount > 0 ? activeSurplusCount : null, tag: 'Segregation' },
+    { id: 'matching', label: 'Smart Recipient Matching', icon: HeartHandshake, badge: 'Unified', tag: 'Core' },
+    { id: 'routing', label: 'Collection Fleet & Routing', icon: Route, badge: null, tag: 'Logistics' },
+    { id: 'delivery', label: 'Collection & Recovery Tracking', icon: Truck, badge: inTransitDeliveriesCount > 0 ? `${inTransitDeliveriesCount} live` : null, tag: 'Multi-Pathway' },
+    { id: 'nutrition', label: 'Nutrition Intelligence', icon: Activity, badge: null, tag: 'Supporting' },
+    { id: 'planner', label: 'Fortify & Meal Planner', icon: PackageCheck, badge: null, tag: 'Supporting' },
+    { id: 'wizard', label: 'Guided Sociothon Demo', icon: Sparkles, badge: 'Judge Tour', tag: 'Demo', special: true },
   ];
 
   return (
@@ -45,20 +45,20 @@ export const Navigation: React.FC<NavigationProps> = ({
         <div className="flex items-center justify-between h-16">
           {/* Brand */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('wizard')}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
                 <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300 bg-clip-text text-transparent">
-                  SOCIOTHON
+                  SOCIOTHON 2026
                 </span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 font-mono font-medium">
-                  Anya + ReRoute
+                  NSS IIT Roorkee
                 </span>
               </div>
               <p className="text-[10px] text-slate-400 tracking-wider uppercase font-medium">
-                Nutrition Intelligence & Food Redistribution
+                Smart Food Waste Prevention, Recovery & Redistribution
               </p>
             </div>
           </div>
@@ -77,7 +77,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             <div className="hidden lg:flex items-center space-x-2 pl-2 border-l border-slate-800">
               <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
-                NFHS-5 Verified
+                Waste Management Challenge
               </span>
             </div>
           </div>

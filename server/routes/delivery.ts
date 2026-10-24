@@ -50,12 +50,13 @@ router.post('/assign', (req: Request, res: Response) => {
 // PATCH /api/deliveries/:id/status - Update delivery status
 router.patch('/:id/status', (req: Request, res: Response) => {
   try {
-    const { status } = req.body;
-    if (!status || !['assigned', 'in_transit', 'delivered', 'cancelled'].includes(status)) {
-      res.status(400).json({ error: 'Valid status required: assigned | in_transit | delivered | cancelled' });
+    const { status, recovery_pathway, notes } = req.body;
+    const validStatuses = ['assigned', 'in_transit', 'delivered', 'diverted_to_compost', 'disposed', 'cancelled'];
+    if (!status || !validStatuses.includes(status)) {
+      res.status(400).json({ error: `Valid status required: ${validStatuses.join(' | ')}` });
       return;
     }
-    const updated = updateDeliveryStatus(req.params.id, status);
+    const updated = updateDeliveryStatus(req.params.id, status, recovery_pathway, notes);
     res.json(updated);
   } catch (err: any) {
     res.status(400).json({ error: err.message });

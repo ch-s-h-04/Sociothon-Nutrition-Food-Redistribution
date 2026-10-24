@@ -120,7 +120,11 @@ export const SurplusManagement: React.FC<SurplusManagementProps> = ({
       case 'in_transit':
         return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">In Transit</span>;
       case 'delivered':
-        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-400 border border-purple-500/30">Delivered</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-400 border border-purple-500/30">Redistributed (Edible)</span>;
+      case 'diverted_to_compost':
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-lime-500/20 text-lime-400 border border-lime-500/30">Diverted to Compost</span>;
+      case 'disposed':
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/30">Disposed</span>;
       default:
         return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-500/20 text-slate-400 border border-slate-500/30">{status}</span>;
     }
@@ -131,14 +135,14 @@ export const SurplusManagement: React.FC<SurplusManagementProps> = ({
       {/* Top Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
         <div>
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
-            REROUTE SURPLUS INVENTORY
+          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            SOCIOTHON 2026 · SOURCE SEGREGATION & LOGGING
           </span>
           <h1 className="text-2xl font-extrabold text-white tracking-tight mt-1">
-            Food Surplus Listings & Registration
+            Food Surplus Prevention, Segregation & Waste Logging
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Register surplus food from restaurants, canteens, and caterers. Standard meal accounting (0.38 kg/meal) with storage handling parameters and expiry deadlines.
+            Intake portal for campus dining halls, canteens, and catering facilities. Enforces waste segregation, safe storage constraints (hot holding &gt;60°C, cold chain &lt;4°C, ambient), and expiry deadlines.
           </p>
         </div>
 
@@ -147,23 +151,23 @@ export const SurplusManagement: React.FC<SurplusManagementProps> = ({
           className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl font-semibold text-xs bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/25 transition whitespace-nowrap"
         >
           <PlusCircle className="w-4 h-4" />
-          <span>Register New Surplus</span>
+          <span>Log Surplus Batch</span>
         </button>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center space-x-2 border-b border-slate-800 pb-3">
-        {['all', 'available', 'assigned', 'in_transit', 'delivered'].map((st) => (
+      <div className="flex items-center space-x-2 border-b border-slate-800 pb-3 overflow-x-auto">
+        {['all', 'available', 'assigned', 'in_transit', 'delivered', 'diverted_to_compost', 'disposed'].map((st) => (
           <button
             key={st}
             onClick={() => setStatusFilter(st)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize whitespace-nowrap transition ${
               statusFilter === st
                 ? 'bg-emerald-600/20 text-emerald-300 border border-emerald-500/40'
                 : 'text-slate-400 hover:text-white hover:bg-slate-800'
             }`}
           >
-            {st.replace('_', ' ')} ({st === 'all' ? surplusListings.length : surplusListings.filter(s => s.status === st).length})
+            {st.replace(/_/g, ' ')} ({st === 'all' ? surplusListings.length : surplusListings.filter(s => s.status === st).length})
           </button>
         ))}
       </div>

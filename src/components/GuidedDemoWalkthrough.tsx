@@ -27,59 +27,59 @@ export const GuidedDemoWalkthrough: React.FC<GuidedDemoWalkthroughProps> = ({
   const steps = [
     {
       step: 1,
-      title: 'Macro Nutrition Intelligence & Priority Area Identification',
-      targetTab: 'nutrition',
-      desc: 'Browse official NFHS-5 factsheet indicators across India’s aspirational districts. Identify Nandurbar (Maharashtra) with 60.6% child stunting and 62.6% child anemia, requiring urgent high-iron and protein intervention.',
-      actionText: 'Open Nutrition Intelligence Map & Factsheets',
-      tag: 'Anya'
+      title: 'Waste Monitoring & Material Flow Accounting',
+      targetTab: 'impact',
+      desc: 'Monitor macroeconomic food waste indicators (UNEP 78 MT/yr) against verified local platform intercepts. Inspect real-time material recovery rates, human redistribution kg, and organic bio-composting diversion accounting.',
+      actionText: 'Open Waste Monitoring & Impact Dashboard',
+      tag: 'Monitoring'
     },
     {
       step: 2,
-      title: 'Food Surplus Registration with Storage Handling Parameters',
+      title: 'Surplus Prevention & Source-Level Waste Logging',
       targetTab: 'surplus',
-      desc: 'Register a surplus donation of freshly prepared cooked meals (dal tadka, fortified rice, and moringa greens) at Satpura Community Kitchen in Nandurbar with hot holding storage requirements and a 2.5-hour safe consumption deadline.',
-      actionText: 'View Surplus Inventory & Register Donation',
-      tag: 'ReRoute'
+      desc: 'Register excess meals from a campus dining hall with source segregation (cooked meals, produce, bakery), storage constraints (hot holding >60°C), and safe consumption expiry deadlines.',
+      actionText: 'View Surplus Logging & Source Intake',
+      tag: 'Segregation'
     },
     {
       step: 3,
-      title: 'Nutrition-Aware Recipient Matching Engine',
+      title: 'Smart Recipient & Priority Matching Engine',
       targetTab: 'matching',
-      desc: 'Execute algorithmic matching. Strict feasibility checks enforce dietary compatibility, capacity, and radius. The scoring engine awards +25 points for Nandurbar’s critical nutrition vulnerability and +15 points for micronutrient synergy, recommending Asha Poshan Collective.',
+      desc: 'Execute algorithmic matching. Strict feasibility checks enforce dietary compatibility, vehicle capacity, and delivery radius, utilizing nutrition vulnerability as a supporting prioritization factor (+25pts for critical stunting/anemia).',
       actionText: 'Run Algorithmic Matching & Inspect Rationale',
-      tag: 'Unified Core'
+      tag: 'Priority Engine'
     },
     {
       step: 4,
-      title: 'Donation Assignment & Fleet Route Optimization',
+      title: 'Optimized Collection Fleet Dispatch & Routing',
       targetTab: 'routing',
-      desc: 'Assign the donation to Asha Poshan Collective. Vehicle V-N01 is dispatched. The routing engine calculates realistic road distance (1.35x circuity) and sequences pickup stops by earliest deadline first.',
-      actionText: 'Inspect Fleet Route & Stops Schedule',
-      tag: 'ReRoute'
+      desc: 'Assign the collection batch to Asha Poshan Collective vehicle V-N01. The routing engine calculates realistic road distance (1.35x circuity) and sequences pickup stops by earliest deadline first.',
+      actionText: 'Inspect Collection Route & Stops Schedule',
+      tag: 'Logistics'
     },
     {
       step: 5,
-      title: 'Real-Time Delivery Lifecycle Tracking',
+      title: 'Multi-Pathway Collection & Quality Verification',
       targetTab: 'delivery',
-      desc: 'Progress the delivery state machine from "Assigned" to "In Transit" and confirm final handover to the recipient NGO. An audited digital trail is recorded.',
-      actionText: 'Open Delivery Dispatch & Confirm Handover',
-      tag: 'ReRoute'
+      desc: 'Track collection in transit and verify handover. Food safety enforcement guards against distributing expired batches for human consumption, enabling verified diversion to local aerobic bio-composting.',
+      actionText: 'Open Collection Tracker & Test Recovery Handover',
+      tag: 'Multi-Pathway'
     },
     {
       step: 6,
-      title: 'The India Paradox & Verified Impact Reflection',
+      title: 'Closed-Loop Resource Recovery & Environmental Offsets',
       targetTab: 'impact',
-      desc: 'Examine how the completed transaction immediately updates the live impact dashboard, calculating exact kilograms of food saved, CO₂ emissions averted (2.5 kg/kg food), and embedded water conserved (750 L/kg food) alongside national UNEP waste benchmarks.',
-      actionText: 'View The India Paradox & Verified Impact',
-      tag: 'UNEP/NABCONS'
+      desc: 'Examine how the completed transaction immediately updates the live impact ledger, calculating exact kilograms of food saved, CO₂ emissions averted (2.5 kg/kg food, 0.85 kg/kg compost), and soil amendment yield.',
+      actionText: 'Inspect Audited Environmental Accounting',
+      tag: 'Accounting'
     },
     {
       step: 7,
-      title: 'Precision Fortification & Cultural Meal Planning',
+      title: 'Precision Fortification & Culturally Tailored Diets',
       targetTab: 'planner',
-      desc: 'Explore Anya’s linear-programming fortification optimizer allocating PDS vehicles to reduce anemia by 33%, paired with 7-day culturally-appropriate family meal plans respecting local dietary traditions.',
-      actionText: 'Open Fortification & Meal Planner',
-      tag: 'Anya'
+      desc: 'Explore supporting nutrition interventions: linear-programming fortification optimizer allocating PDS vehicles to reduce anemia by 33%, paired with 7-day culturally-appropriate family meal plans respecting local dietary traditions.',
+      actionText: 'Open Supporting Fortification & Meal Planner',
+      tag: 'Supporting'
     }
   ];
 
@@ -88,16 +88,16 @@ export const GuidedDemoWalkthrough: React.FC<GuidedDemoWalkthroughProps> = ({
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-amber-950/60 via-slate-900 to-emerald-950/60 p-8 rounded-3xl border border-amber-500/30 shadow-2xl text-center space-y-3">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono font-semibold">
+      <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-teal-950/60 p-8 rounded-3xl border border-emerald-500/30 shadow-2xl text-center space-y-3">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-mono font-semibold">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>SOCIOTHON HACKATHON LIVE EVALUATION TOUR</span>
+          <span>SOCIOTHON 2026 · SMART & SUSTAINABLE WASTE MANAGEMENT</span>
         </div>
         <h1 className="text-3xl font-black text-white tracking-tight">
-          Anya + ReRoute Unified End-to-End Demonstration
+          Smart Food Waste Prevention, Recovery & Redistribution Tour
         </h1>
         <p className="text-sm text-slate-300 max-w-2xl mx-auto">
-          Experience the complete closed-loop workflow connecting Macro/Micro-Nutrition Intelligence with Operational Food Redistribution across India’s most vulnerable districts.
+          Experience the complete closed-loop waste management workflow: source prevention, segregated intake, smart priority matching, collection fleet routing, and multi-pathway resource recovery (human consumption vs. bio-composting).
         </p>
 
         <div className="pt-2 flex items-center justify-center gap-3">

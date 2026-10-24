@@ -1,5 +1,5 @@
 import { store } from '../db/store.ts';
-import type { DeliveryRecord, SurplusStatus } from '../types/index.ts';
+import type { DeliveryRecord, DeliveryStatus, RecoveryPathway, SurplusStatus } from '../types/index.ts';
 import { calculateHaversineDistanceKm, estimateTravelTimeMinutes } from './matchingService.ts';
 
 export interface AssignDeliveryInput {
@@ -8,15 +8,47 @@ export interface AssignDeliveryInput {
   vehicle_id?: string;
 }
 
-export function calculateEnvironmentalImpact(foodWeightKg: number, mealsCount: number) {
+export function calculateEnvironmentalImpact(
+  foodWeightKg: number, 
+  mealsCount: number, 
+  pathway: RecoveryPathway = 'human_consumption'
+) {
   // Documented LCA parameters:
-  // 1 kg food waste averted = 2.5 kg CO2 equivalent emissions prevented (FAO / UNEP Food Waste Index 2024)
-  // 1 kg food saved = 750 liters embedded agricultural water conserved (Water Footprint Network India)
-  // 1 meal saved = ₹65 estimated consumer replacement value
+  // Human consumption: 
+  //   1 kg food waste averted = 2.5 kg CO2 equivalent emissions prevented (FAO / UNEP Food Waste Index 2024)
+  //   1 kg food saved = 750 liters embedded agricultural water conserved (Water Footprint Network India)
+  //   1 meal saved = ₹65 estimated consumer replacement value
+  // Organic Composting / Bio-recovery:
+  //   1 kg diverted to compost = 0.85 kg CO2e prevented (EPA WARM anaerobic landfill methane avoided)
+  //   0.25 kg organic soil compost generated per 1 kg wet food waste
+  //   ₹8 / kg organic compost market value
+  // Disposal:
+  //   0 offsets
+
+  if (pathway === 'composting_resource_recovery') {
+    const compostKg = Number((foodWeightKg * 0.25).toFixed(1));
+    return {
+      co2_avoided_kg: Number((foodWeightKg * 0.85).toFixed(1)),
+      water_saved_liters: 0,
+      economic_value_inr: Math.round(compostKg * 8),
+      compost_generated_kg: compostKg
+    };
+  }
+
+  if (pathway === 'disposal') {
+    return {
+      co2_avoided_kg: 0,
+      water_saved_liters: 0,
+      economic_value_inr: 0,
+      compost_generated_kg: 0
+    };
+  }
+
   return {
     co2_avoided_kg: Number((foodWeightKg * 2.5).toFixed(1)),
     water_saved_liters: Math.round(foodWeightKg * 750),
-    economic_value_inr: Math.round(mealsCount * 65)
+    economic_value_inr: Math.round(mealsCount * 65),
+    compost_generated_kg: 0
   };
 }
 
@@ -25,8 +57,8 @@ export function assignDonationToNGO(input: AssignDeliveryInput): DeliveryRecord 
   if (!surplus) {
     throw new Error(`Surplus listing ${input.surplus_id} not found`);
   }
-  if (surplus.status === 'delivered') {
-    throw new Error(`Surplus listing ${input.surplus_id} is already marked as delivered`);
+  if (['delivered', 'diverted_to_compost', 'disposed'].includes(surplus.status)) {
+    throw new Error(`Surplus listing ${input.surplus_id} is already processed (${surplus.status})`);
   }
 
   const ngo = store.getNGOById(input.ngo_id);
@@ -49,7 +81,7 @@ export function assignDonationToNGO(input: AssignDeliveryInput): DeliveryRecord 
   const etaMins = estimateTravelTimeMinutes(distanceKm);
 
   const deliveryId = `DEL-${Date.now().toString().slice(-4)}-${Math.floor(Math.random() * 900 + 100)}`;
-  const impact = calculateEnvironmentalImpact(surplus.food_weight_kg, surplus.quantity_meals);
+  const impact = calculateEnvironmentalImpact(surplus.food_weight_kg, surplus.quantity_meals, 'human_consumption');
 
   const delivery: DeliveryRecord = {
     id: deliveryId,
@@ -92,23 +124,86 @@ export function assignDonationToNGO(input: AssignDeliveryInput): DeliveryRecord 
   return delivery;
 }
 
-export function updateDeliveryStatus(deliveryId: string, status: 'assigned' | 'in_transit' | 'delivered' | 'cancelled'): DeliveryRecord {
+export function updateDeliveryStatus(
+  deliveryId: string, 
+  status: DeliveryStatus,
+  pathway?: RecoveryPathway,
+  notes?: string
+): DeliveryRecord {
   const delivery = store.getDeliveryById(deliveryId);
   if (!delivery) {
     throw new Error(`Delivery record ${deliveryId} not found`);
   }
 
+  const surplus = store.getSurplusById(delivery.surplus_id);
   const now = new Date().toISOString();
   const updates: Partial<DeliveryRecord> = { status };
 
-  if (status === 'in_transit' && !delivery.dispatched_at) {
-    updates.dispatched_at = now;
-    store.updateSurplus(delivery.surplus_id, { status: 'in_transit' });
-    store.updateVehicle(delivery.vehicle_id, { status: 'en_route' });
-  } else if (status === 'delivered') {
+  if (notes) {
+    updates.recovery_notes = notes;
+  }
+
+  // FOOD SAFETY ENFORCEMENT:
+  // If attempting to deliver for human consumption, verify safe consumption deadline has not expired.
+  if (status === 'delivered') {
+    if (surplus && surplus.expiry_at) {
+      const expiryTimestamp = new Date(surplus.expiry_at).getTime();
+      const currentTimestamp = Date.now();
+      if (currentTimestamp > expiryTimestamp) {
+        throw new Error(
+          `Food Safety Violation: Surplus listing ${surplus.id} expired at ${surplus.expiry_at}. ` +
+          `Expired food cannot be redistributed for human consumption. ` +
+          `Please divert this batch to composting / resource recovery or safe disposal.`
+        );
+      }
+    }
+
+    updates.recovery_pathway = pathway || 'human_consumption';
     updates.delivered_at = now;
+    updates.environmental_impact = calculateEnvironmentalImpact(
+      delivery.food_weight_kg, 
+      delivery.quantity_meals, 
+      'human_consumption'
+    );
+
     store.updateSurplus(delivery.surplus_id, { status: 'delivered' });
     store.updateVehicle(delivery.vehicle_id, { status: 'available' });
+
+  } else if (status === 'diverted_to_compost') {
+    // Divert batch to organic composting / bio-resource recovery
+    updates.recovery_pathway = 'composting_resource_recovery';
+    updates.recovery_notes = notes || 'Diverted to local aerobic bio-composting unit for soil amendment.';
+    updates.delivered_at = now;
+    updates.environmental_impact = calculateEnvironmentalImpact(
+      delivery.food_weight_kg, 
+      delivery.quantity_meals, 
+      'composting_resource_recovery'
+    );
+
+    store.updateSurplus(delivery.surplus_id, { status: 'diverted_to_compost' });
+    store.updateVehicle(delivery.vehicle_id, { status: 'available' });
+
+  } else if (status === 'disposed') {
+    // Safely discard spoiled/non-recoverable waste
+    updates.recovery_pathway = 'disposal';
+    updates.recovery_notes = notes || 'Disposed via compliant municipal organic waste stream.';
+    updates.delivered_at = now;
+    updates.environmental_impact = calculateEnvironmentalImpact(
+      delivery.food_weight_kg, 
+      delivery.quantity_meals, 
+      'disposal'
+    );
+
+    store.updateSurplus(delivery.surplus_id, { status: 'disposed' });
+    store.updateVehicle(delivery.vehicle_id, { status: 'available' });
+
+  } else if (status === 'in_transit') {
+    if (!delivery.dispatched_at) {
+      updates.dispatched_at = now;
+    }
+    store.updateSurplus(delivery.surplus_id, { status: 'in_transit' });
+    store.updateVehicle(delivery.vehicle_id, { status: 'en_route' });
+
   } else if (status === 'cancelled') {
     store.updateSurplus(delivery.surplus_id, { status: 'available' });
     store.updateVehicle(delivery.vehicle_id, { status: 'available' });

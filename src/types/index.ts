@@ -1,7 +1,27 @@
 export type DietaryType = 'vegetarian' | 'vegan' | 'mixed' | 'non_vegetarian';
 export type FoodCategory = 'cooked meals' | 'rice' | 'bread' | 'vegetables' | 'packaged food' | 'bakery' | 'mixed meals';
-export type StorageRequirement = 'ambient' | 'cold_storage' | 'hot_holding';
-export type SurplusStatus = 'available' | 'matched' | 'assigned' | 'in_transit' | 'delivered' | 'expired';
+export type SurplusStatus = 
+  | 'available' 
+  | 'matched'
+  | 'assigned' 
+  | 'in_transit' 
+  | 'delivered' 
+  | 'diverted_to_compost' 
+  | 'disposed' 
+  | 'expired';
+
+export type DeliveryStatus = 
+  | 'assigned' 
+  | 'in_transit' 
+  | 'delivered' 
+  | 'diverted_to_compost' 
+  | 'disposed' 
+  | 'cancelled';
+
+export type RecoveryPathway = 
+  | 'human_consumption' 
+  | 'composting_resource_recovery' 
+  | 'disposal';
 
 export interface DistrictSummary {
   id: string;
@@ -231,7 +251,9 @@ export interface DeliveryRecord {
   food_weight_kg: number;
   food_type: string;
   dietary_type: string;
-  status: 'assigned' | 'in_transit' | 'delivered' | 'cancelled';
+  status: DeliveryStatus;
+  recovery_pathway?: RecoveryPathway;
+  recovery_notes?: string;
   pickup_lat: number;
   pickup_lng: number;
   dropoff_lat: number;
@@ -245,6 +267,7 @@ export interface DeliveryRecord {
     co2_avoided_kg: number;
     water_saved_liters: number;
     economic_value_inr: number;
+    compost_generated_kg?: number;
   };
 }
 
@@ -254,8 +277,23 @@ export interface ImpactMetrics {
     active_available_surplus: number;
     assigned_in_transit_deliveries: number;
     completed_deliveries: number;
+    diverted_to_compost_count?: number;
+    disposed_count?: number;
+    total_registered_kg?: number;
+    total_registered_meals?: number;
+    pending_collection_kg?: number;
+    collected_kg?: number;
+    redistributed_kg?: number;
+    redistributed_meals?: number;
     total_meals_delivered: number;
     total_food_weight_kg_rescued: number;
+    composted_kg?: number;
+    compost_yield_kg?: number;
+    disposed_kg?: number;
+    recovery_rate_pct?: number;
+    redistribution_rate_pct?: number;
+    collection_distance_km?: number;
+    collection_efficiency_kg_per_km?: number;
     environmental_offsets: {
       co2_emissions_averted_kg: number;
       water_footprint_saved_liters: number;

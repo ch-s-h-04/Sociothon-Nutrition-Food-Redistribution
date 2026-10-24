@@ -1,7 +1,27 @@
 export type DietaryType = 'vegetarian' | 'vegan' | 'mixed' | 'non_vegetarian';
 export type FoodCategory = 'cooked meals' | 'rice' | 'bread' | 'vegetables' | 'packaged food' | 'bakery' | 'mixed meals';
 export type StorageRequirement = 'ambient' | 'cold_storage' | 'hot_holding';
-export type SurplusStatus = 'available' | 'matched' | 'assigned' | 'in_transit' | 'delivered' | 'expired';
+export type SurplusStatus = 
+  | 'available' 
+  | 'assigned' 
+  | 'in_transit' 
+  | 'delivered' 
+  | 'diverted_to_compost' 
+  | 'disposed' 
+  | 'expired';
+
+export type DeliveryStatus = 
+  | 'assigned' 
+  | 'in_transit' 
+  | 'delivered' 
+  | 'diverted_to_compost' 
+  | 'disposed' 
+  | 'cancelled';
+
+export type RecoveryPathway = 
+  | 'human_consumption' 
+  | 'composting_resource_recovery' 
+  | 'disposal';
 
 export interface Location {
   latitude: number;
@@ -137,7 +157,9 @@ export interface DeliveryRecord {
   food_weight_kg: number;
   food_type: string;
   dietary_type: string;
-  status: 'assigned' | 'in_transit' | 'delivered' | 'cancelled';
+  status: DeliveryStatus;
+  recovery_pathway?: RecoveryPathway;
+  recovery_notes?: string;
   pickup_lat: number;
   pickup_lng: number;
   dropoff_lat: number;
@@ -151,5 +173,6 @@ export interface DeliveryRecord {
     co2_avoided_kg: number;
     water_saved_liters: number;
     economic_value_inr: number;
+    compost_generated_kg?: number;
   };
 }
