@@ -6,6 +6,7 @@ import {
   UtensilsCrossed,
   Sparkles,
   RotateCcw,
+  Trophy,
 } from 'lucide-react';
 
 interface NavigationProps {
@@ -31,6 +32,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { id: 'matching', label: 'Smart Recipient Matching', icon: HeartHandshake, badge: 'Unified', tag: 'Core' },
     { id: 'delivery', label: 'Reservation Tracking', icon: HeartHandshake, badge: inTransitDeliveriesCount > 0 ? `${inTransitDeliveriesCount} active` : null, tag: 'Recovery' },
     { id: 'nutrition', label: 'Nutrition Intelligence', icon: Activity, badge: null, tag: 'Supporting' },
+    { id: 'leaderboard', label: 'Provider Leaderboard', icon: Trophy, badge: 'Trust', tag: 'Impact' },
   ];
 
   return (

@@ -5,6 +5,7 @@ import { SurplusManagement } from './components/SurplusManagement';
 import { SmartMatching } from './components/SmartMatching';
 import { DeliveryTracker } from './components/DeliveryTracker';
 import { ImpactDashboard } from './components/ImpactDashboard';
+import { ProviderLeaderboard } from './components/ProviderLeaderboard';
 import { api } from './utils/api';
 import { SurplusEvent } from './types';
 import { Heart, Github, ExternalLink } from 'lucide-react';
@@ -106,6 +107,10 @@ export function App() {
 
         {activeTab === 'impact' && (
           <ImpactDashboard />
+        )}
+
+        {activeTab === 'leaderboard' && (
+          <ProviderLeaderboard />
         )}
 
       </main>

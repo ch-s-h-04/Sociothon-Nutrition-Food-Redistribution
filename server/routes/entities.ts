@@ -1,12 +1,21 @@
 import express, { type Request, type Response } from 'express';
 import { store } from '../db/store.ts';
 import type { RestaurantDonor, RecipientNGO } from '../types/index.ts';
+import { getProviderLeaderboard, PROVIDER_TRUST_METHOD } from '../services/providerTrustService.ts';
 
 const router = express.Router();
 
 // Restaurants
 router.get('/restaurants', (_req: Request, res: Response) => {
   res.json(store.getRestaurants());
+});
+
+// Public provider reputation leaderboard, derived from verified platform activity.
+router.get('/providers/leaderboard', (_req: Request, res: Response) => {
+  res.json({
+    providers: getProviderLeaderboard(),
+    methodology: PROVIDER_TRUST_METHOD
+  });
 });
 
 router.post('/restaurants', (req: Request, res: Response) => {

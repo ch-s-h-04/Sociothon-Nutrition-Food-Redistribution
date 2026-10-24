@@ -50,6 +50,23 @@ export interface RestaurantDonor {
   active: boolean;
 }
 
+export interface ProviderLeaderboardEntry {
+  rank: number;
+  provider_id: string;
+  provider_name: string;
+  provider_type: RestaurantDonor['type'];
+  district: string;
+  state: string;
+  trust_score: number;
+  badge: 'Gold' | 'Silver' | 'Bronze' | 'Verified';
+  reliability_score: number;
+  safety_score: number;
+  handover_score: number;
+  verification_score: number;
+  verified_handovers: number;
+  meals_redistributed: number;
+}
+
 export interface RecipientNGO {
   id: string;
   name: string;

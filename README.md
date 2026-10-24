@@ -132,7 +132,10 @@ The platform operationalizes a five-stage closed-loop lifecycle that intercepts 
 - **Geographic Vulnerability Prioritization**: Allows operators to target food recovery initiatives to areas experiencing acute nutritional deficits.
 
 ### 8. Guided Sociothon Demo
-- **7-Step Judge Walkthrough**: Built-in interactive evaluator wizard that guides reviewers through logging surplus, algorithmic matching, dispatching routes, executing multi-pathway handover, and observing immediate impact ledger updates.
+- **6-Step Judge Walkthrough**: Built-in interactive evaluator wizard that guides reviewers through logging surplus, algorithmic matching, dispatching routes, executing multi-pathway handover, and observing immediate impact ledger updates.
+
+### 9. Provider Trust Leaderboard
+- **Food Recovery Partner Reputation**: Publicly ranks active providers using a transparent Trust Score: reliability (40%), food-safety confidence (25%), successful NGO handovers (25%), and capped verified activity (10%). Donation quantity does not affect rank.
 
 ---
 
@@ -357,7 +360,7 @@ The codebase includes an automated test suite executed via the native Node.js te
 npm test
 ```
 
-### Verified Test Results (17/17 Passing):
+### Verified Test Results (18/18 Passing):
 ```text
 > sociothon-nutrition-food-redistribution@1.0.0 test
 > node --test tests/**/*.test.mjs

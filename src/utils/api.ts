@@ -8,6 +8,7 @@ import {
   MatchingResult,
   DeliveryRecord,
   ImpactMetrics,
+  ProviderLeaderboardEntry,
   SurplusStatus,
   DeliveryStatus,
   RecoveryPathway
@@ -82,6 +83,13 @@ export const api = {
   // Impact & The Paradox Metrics
   impact: {
     getMetrics: () => fetchJson<ImpactMetrics>('/impact')
+  },
+
+  providers: {
+    getLeaderboard: () => fetchJson<{
+      providers: ProviderLeaderboardEntry[];
+      methodology: { reliability: number; safety: number; handover: number; verification: number; principle: string };
+    }>('/providers/leaderboard')
   },
 
   // Entity Management & Reset
