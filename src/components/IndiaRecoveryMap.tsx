@@ -8,7 +8,10 @@ import {
   Compass,
   Layers,
   Sparkles,
-  Info
+  Info,
+  AlertTriangle,
+  AlertCircle,
+  ExternalLink
 } from 'lucide-react';
 
 export interface StateRecoveryData {
@@ -38,6 +41,10 @@ export const IndiaRecoveryMap: React.FC = () => {
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markersRef = useRef<L.LayerGroup | null>(null);
   const [selectedState, setSelectedState] = useState<StateRecoveryData>(INDIA_STATES_DATA[0]);
+  const [tileError, setTileError] = useState<boolean>(false);
+
+  // Authenticate CARTO basemap via environment variable
+  const cartoApiKey = (import.meta.env.VITE_CARTO_API_KEY || '').trim();
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
@@ -53,10 +60,21 @@ export const IndiaRecoveryMap: React.FC = () => {
       attributionControl: false
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      subdomains: 'abcd',
-      maxZoom: 19
-    }).addTo(map);
+    if (cartoApiKey) {
+      // CARTO raster basemap endpoint with authenticated API key
+      const tileUrl = `https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`;
+      const tileLayer = L.tileLayer(tileUrl, {
+        subdomains: 'abcd',
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+      });
+
+      tileLayer.on('tileerror', () => {
+        setTileError(true);
+      });
+
+      tileLayer.addTo(map);
+    }
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
@@ -154,6 +172,40 @@ export const IndiaRecoveryMap: React.FC = () => {
         <div className="lg:col-span-7 flex flex-col space-y-2">
           <div className="relative w-full h-[360px] rounded-xl overflow-hidden border border-slate-800 bg-[#0B0F19] shadow-inner">
             <div ref={mapRef} className="w-full h-full z-0" />
+
+            {/* Missing API Key Configuration Warning */}
+            {!cartoApiKey && (
+              <div className="absolute inset-x-4 top-14 z-[1000] bg-slate-950/95 border border-amber-500/50 p-3 rounded-xl shadow-2xl backdrop-blur-md text-amber-200 text-xs flex items-start gap-2.5">
+                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <div className="font-semibold text-amber-300">CARTO Basemap API Key Required</div>
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    CARTO now requires authentication. Please configure <code className="px-1 py-0.5 bg-slate-900 rounded text-amber-300 font-mono border border-slate-700">VITE_CARTO_API_KEY</code> in your <code className="px-1 py-0.5 bg-slate-900 rounded text-amber-300 font-mono border border-slate-700">.env</code> file.
+                  </p>
+                  <a
+                    href="https://carto.com/basemaps/apikey"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] text-emerald-400 hover:text-emerald-300 font-medium underline underline-offset-2"
+                  >
+                    Request free CARTO Basemap key <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {/* Tile Error / Auth Failure Warning */}
+            {cartoApiKey && tileError && (
+              <div className="absolute inset-x-4 top-14 z-[1000] bg-slate-950/95 border border-rose-500/50 p-3 rounded-xl shadow-2xl backdrop-blur-md text-rose-200 text-xs flex items-start gap-2.5">
+                <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <div className="font-semibold text-rose-300">CARTO Tile Authentication Error</div>
+                  <p className="text-[11px] text-rose-200/90 leading-relaxed">
+                    CARTO rejected the tile requests. Verify that your <code className="px-1 py-0.5 bg-slate-900 rounded font-mono text-rose-300">VITE_CARTO_API_KEY</code> is active and authorized for browser access.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Map Overlay Badge */}
             <div className="absolute top-3 left-3 z-[1000] bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/80 shadow-md pointer-events-none">
