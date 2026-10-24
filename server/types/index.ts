@@ -197,10 +197,4 @@ export interface DeliveryRecord {
   dispatched_at?: string;
   delivered_at?: string;
   provider_rating?: ProviderRating;
-  environmental_impact: {
-    co2_avoided_kg: number;
-    water_saved_liters: number;
-    economic_value_inr: number;
-    compost_generated_kg?: number;
-  };
 }

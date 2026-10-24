@@ -8,50 +8,6 @@ export interface AssignDeliveryInput {
   vehicle_id?: string;
 }
 
-export function calculateEnvironmentalImpact(
-  foodWeightKg: number, 
-  mealsCount: number, 
-  pathway: RecoveryPathway = 'human_consumption'
-) {
-  // Documented LCA parameters:
-  // Human consumption: 
-  //   1 kg food waste averted = 2.5 kg CO2 equivalent emissions prevented (FAO / UNEP Food Waste Index 2024)
-  //   1 kg food saved = 750 liters embedded agricultural water conserved (Water Footprint Network India)
-  //   1 meal saved = ₹65 estimated consumer replacement value
-  // Organic Composting / Bio-recovery:
-  //   1 kg diverted to compost = 0.85 kg CO2e prevented (EPA WARM anaerobic landfill methane avoided)
-  //   0.25 kg organic soil compost generated per 1 kg wet food waste
-  //   ₹8 / kg organic compost market value
-  // Disposal:
-  //   0 offsets
-
-  if (pathway === 'composting_resource_recovery') {
-    const compostKg = Number((foodWeightKg * 0.25).toFixed(1));
-    return {
-      co2_avoided_kg: Number((foodWeightKg * 0.85).toFixed(1)),
-      water_saved_liters: 0,
-      economic_value_inr: Math.round(compostKg * 8),
-      compost_generated_kg: compostKg
-    };
-  }
-
-  if (pathway === 'disposal') {
-    return {
-      co2_avoided_kg: 0,
-      water_saved_liters: 0,
-      economic_value_inr: 0,
-      compost_generated_kg: 0
-    };
-  }
-
-  return {
-    co2_avoided_kg: Number((foodWeightKg * 2.5).toFixed(1)),
-    water_saved_liters: Math.round(foodWeightKg * 750),
-    economic_value_inr: Math.round(mealsCount * 65),
-    compost_generated_kg: 0
-  };
-}
-
 export function assignDonationToNGO(input: AssignDeliveryInput): DeliveryRecord {
   const surplus = store.getSurplusById(input.surplus_id);
   if (!surplus) {
@@ -81,8 +37,6 @@ export function assignDonationToNGO(input: AssignDeliveryInput): DeliveryRecord 
   const etaMins = estimateTravelTimeMinutes(distanceKm);
 
   const deliveryId = `DEL-${Date.now().toString().slice(-4)}-${Math.floor(Math.random() * 900 + 100)}`;
-  const impact = calculateEnvironmentalImpact(surplus.food_weight_kg, surplus.quantity_meals, 'human_consumption');
-
   const delivery: DeliveryRecord = {
     id: deliveryId,
     surplus_id: surplus.id,
@@ -103,8 +57,7 @@ export function assignDonationToNGO(input: AssignDeliveryInput): DeliveryRecord 
     dropoff_lng: ngo.longitude,
     estimated_distance_km: roadDistKm,
     estimated_time_minutes: etaMins,
-    assigned_at: new Date().toISOString(),
-    environmental_impact: impact
+    assigned_at: new Date().toISOString()
   };
 
   // Update store
@@ -160,12 +113,6 @@ export function updateDeliveryStatus(
 
     updates.recovery_pathway = pathway || 'human_consumption';
     updates.delivered_at = now;
-    updates.environmental_impact = calculateEnvironmentalImpact(
-      delivery.food_weight_kg, 
-      delivery.quantity_meals, 
-      'human_consumption'
-    );
-
     store.updateSurplus(delivery.surplus_id, { status: 'delivered' });
     store.updateVehicle(delivery.vehicle_id, { status: 'available' });
 
@@ -174,12 +121,6 @@ export function updateDeliveryStatus(
     updates.recovery_pathway = 'composting_resource_recovery';
     updates.recovery_notes = notes || 'Diverted to local aerobic bio-composting unit for soil amendment.';
     updates.delivered_at = now;
-    updates.environmental_impact = calculateEnvironmentalImpact(
-      delivery.food_weight_kg, 
-      delivery.quantity_meals, 
-      'composting_resource_recovery'
-    );
-
     store.updateSurplus(delivery.surplus_id, { status: 'diverted_to_compost' });
     store.updateVehicle(delivery.vehicle_id, { status: 'available' });
 
@@ -188,12 +129,6 @@ export function updateDeliveryStatus(
     updates.recovery_pathway = 'disposal';
     updates.recovery_notes = notes || 'Disposed via compliant municipal organic waste stream.';
     updates.delivered_at = now;
-    updates.environmental_impact = calculateEnvironmentalImpact(
-      delivery.food_weight_kg, 
-      delivery.quantity_meals, 
-      'disposal'
-    );
-
     store.updateSurplus(delivery.surplus_id, { status: 'disposed' });
     store.updateVehicle(delivery.vehicle_id, { status: 'available' });
 

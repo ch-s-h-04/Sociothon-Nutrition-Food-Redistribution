@@ -12,9 +12,6 @@ import {
   BarChart3,
   TrendingDown,
   Globe2,
-  Leaf,
-  Droplets,
-  IndianRupee,
   ShieldAlert,
   Info,
   Clock,
@@ -211,7 +208,7 @@ export const ImpactDashboard: React.FC = () => {
               {op?.composted_kg ?? 0} <span className="text-sm font-normal text-slate-400">kg</span>
             </span>
             <span className="text-[10px] text-slate-500 block mt-1">
-              Yield: ~{op?.compost_yield_kg ?? 0} kg soil amendment
+              Verified diversion to a composting partner
             </span>
           </div>
         </div>
@@ -263,44 +260,6 @@ export const ImpactDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Environmental Offsets Summary */}
-        <div className="bg-slate-950/70 p-4 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
-          <div>
-            <span className="text-slate-400 text-xs block uppercase flex items-center gap-1">
-              <Leaf className="w-3.5 h-3.5 text-emerald-400" /> Total CO₂ Avoided
-            </span>
-            <span className="text-xl font-black text-emerald-400 mt-1 block">
-              {op?.environmental_offsets.co2_emissions_averted_kg ?? 0} <span className="text-sm font-normal text-slate-400">kg CO₂e</span>
-            </span>
-            <span className="text-[10px] text-slate-500 block mt-0.5">
-              2.5 kg CO₂e/kg (food) + 0.85 kg CO₂e/kg (compost methane)
-            </span>
-          </div>
-
-          <div>
-            <span className="text-slate-400 text-xs block uppercase flex items-center gap-1">
-              <Droplets className="w-3.5 h-3.5 text-cyan-400" /> Embedded Water Conserved
-            </span>
-            <span className="text-xl font-black text-cyan-400 mt-1 block">
-              {(op?.environmental_offsets.water_footprint_saved_liters ?? 0).toLocaleString()} <span className="text-sm font-normal text-slate-400">L</span>
-            </span>
-            <span className="text-[10px] text-slate-500 block mt-0.5">
-              750 L embedded agricultural water / kg food saved
-            </span>
-          </div>
-
-          <div>
-            <span className="text-slate-400 text-xs block uppercase flex items-center gap-1">
-              <IndianRupee className="w-3.5 h-3.5 text-amber-400" /> Preserved Economic Value
-            </span>
-            <span className="text-xl font-black text-amber-400 mt-1 block">
-              ₹{(op?.environmental_offsets.economic_value_preserved_inr ?? 0).toLocaleString()}
-            </span>
-            <span className="text-[10px] text-slate-500 block mt-0.5">
-              ₹65/meal food value + ₹8/kg compost value
-            </span>
-          </div>
-        </div>
       </div>
 
       {/* Macro Data & GHI Trend */}

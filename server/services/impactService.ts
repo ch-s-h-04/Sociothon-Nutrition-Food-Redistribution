@@ -46,7 +46,6 @@ export function getPlatformImpactMetrics() {
   const redistributedMeals = deliveredRecords.reduce((sum, d) => sum + d.quantity_meals, 0);
   const redistributedKg = Number(deliveredRecords.reduce((sum, d) => sum + d.food_weight_kg, 0).toFixed(1));
   const compostedKg = Number(compostRecords.reduce((sum, d) => sum + d.food_weight_kg, 0).toFixed(1));
-  const compostYieldKg = Number(compostRecords.reduce((sum, d) => sum + (d.environmental_impact.compost_generated_kg || 0), 0).toFixed(1));
   const disposedKg = Number(disposedRecords.reduce((sum, d) => sum + d.food_weight_kg, 0).toFixed(1));
 
   // Collected kg = sum of batches that have been picked up/processed (delivered + composted + disposed + in_transit)
@@ -65,20 +64,6 @@ export function getPlatformImpactMetrics() {
   const collectionEfficiency = totalDistanceKm > 0 
     ? Number((collectedKg / totalDistanceKm).toFixed(2)) 
     : 0;
-
-  // Environmental offsets from delivered and composted items
-  const actualCo2Avoided = Number(
-    deliveries
-      .filter(d => d.status === 'delivered' || d.status === 'diverted_to_compost')
-      .reduce((sum, d) => sum + d.environmental_impact.co2_avoided_kg, 0)
-      .toFixed(1)
-  );
-  const actualWaterSaved = deliveries
-    .filter(d => d.status === 'delivered')
-    .reduce((sum, d) => sum + d.environmental_impact.water_saved_liters, 0);
-  const actualEconomicSaved = deliveries
-    .filter(d => d.status === 'delivered' || d.status === 'diverted_to_compost')
-    .reduce((sum, d) => sum + d.environmental_impact.economic_value_inr, 0);
 
   // Modelled statistical projection derived mathematically from UNEP Food Waste Index 2024
   // Baseline: 78,192,338 tonnes/year -> 78,192,338,000 kg ÷ 31,536,000 seconds = ~2,479.4628 kg/sec
@@ -104,17 +89,11 @@ export function getPlatformImpactMetrics() {
       total_meals_delivered: redistributedMeals,
       total_food_weight_kg_rescued: redistributedKg,
       composted_kg: compostedKg,
-      compost_yield_kg: compostYieldKg,
       disposed_kg: disposedKg,
       recovery_rate_pct: recoveryRatePct,
       redistribution_rate_pct: redistributionRatePct,
       collection_distance_km: totalDistanceKm,
       collection_efficiency_kg_per_km: collectionEfficiency,
-      environmental_offsets: {
-        co2_emissions_averted_kg: actualCo2Avoided,
-        water_footprint_saved_liters: actualWaterSaved,
-        economic_value_preserved_inr: actualEconomicSaved
-      },
       provenance: 'Derived directly from verified platform database transaction records.'
     },
     macro_context_india: {

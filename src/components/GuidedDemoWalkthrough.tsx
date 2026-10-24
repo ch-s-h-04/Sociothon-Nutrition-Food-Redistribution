@@ -60,9 +60,9 @@ export const GuidedDemoWalkthrough: React.FC<GuidedDemoWalkthroughProps> = ({
     },
     {
       step: 6,
-      title: 'Closed-Loop Resource Recovery & Environmental Offsets',
+      title: 'Closed-Loop Resource Recovery',
       targetTab: 'impact',
-      desc: 'Examine how the completed transaction immediately updates the live impact ledger, calculating exact kilograms of food saved, CO₂ emissions averted (2.5 kg/kg food, 0.85 kg/kg compost), and soil amendment yield.',
+      desc: 'Examine how the completed transaction updates the live impact ledger with verified kilograms collected, redistributed, composted, and safely disposed.',
       actionText: 'Inspect Audited Environmental Accounting',
       tag: 'Accounting'
     }

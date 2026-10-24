@@ -83,7 +83,7 @@ The platform operationalizes a five-stage closed-loop lifecycle that intercepts 
 │ 5. Audited Material Accounting & Real-Time Monitoring   │
 │    • Audited ledger: kg registered, collected, rescued   │
 │    • Material Recovery Rate (%) & Diversion Rate (%)     │
-│    • Lifecycle CO₂ avoided, water saved, compost yielded │
+│    • Verified recovery and diversion weights              │
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -94,7 +94,6 @@ The platform operationalizes a five-stage closed-loop lifecycle that intercepts 
 ### 1. Waste Monitoring & Impact
 - **Audited Material Stream Ledger**: Real-time operational accounting of kilograms registered, collected, redistributed to communities, diverted to composting, and disposed.
 - **Diversion & Recovery Rates**: Automatic calculation of **Material Recovery Rate (%)** and **Redistribution Rate (%)** derived directly from persistent database records.
-- **Environmental Offset Modeling**: Quantifies lifecycle greenhouse gas mitigation ($2.5\text{ kg CO}_2\text{e}/\text{kg}$ edible food, $0.85\text{ kg CO}_2\text{e}/\text{kg}$ landfill methane avoidance for compost), agricultural water conserved ($750\text{ L}/\text{kg}$), and economic value preserved.
 - **National Household Food Waste Benchmark**: Displays the verified baseline of **78.2 Million Tonnes/year** from the **UNEP Food Waste Index Report 2024** alongside a deterministic cumulative projection ticker ($~2,479.46\text{ kg/sec}$), clearly distinguished from local platform operations.
 
 ### 2. India's Food Recovery Network
@@ -123,8 +122,8 @@ The platform operationalizes a five-stage closed-loop lifecycle that intercepts 
 ### 6. Collection & Recovery Tracking (Multi-Pathway Handover)
 - **Lifecycle State Machine**: Tracks donations through active stages (`assigned` $\rightarrow$ `in_transit` $\rightarrow$ `delivered` / `diverted_to_compost` / `disposed`).
 - **Dual-Pathway Handover**:
-  - **Redistribute (Edible)**: Verifies safe human delivery, generating nutritional and environmental offset records.
-  - **Divert to Compost**: Diverts degraded or past-safe-window food to local aerobic bio-composters, tracking organic soil amendment output ($0.25\text{ kg compost per kg wet waste}$).
+  - **Redistribute (Edible)**: Verifies safe human delivery to the assigned NGO.
+  - **Divert to Compost**: Records diversion of degraded or past-safe-window food to a local aerobic bio-composter.
 - **Automated Food Safety Guard**: If a food batch's safe consumption window expires, human redistribution is automatically disabled, enforcing safe diversion to composting or disposal.
 
 ### 7. Nutrition Intelligence (Supporting)
@@ -145,7 +144,7 @@ Usable interface captures can be saved to [`docs/screenshots/`](./docs/screensho
 
 | View | Description | Key Elements |
 |---|---|---|
-| **Waste Monitoring & Impact** | Executive waste ledger & national benchmark | UNEP 2024 78.2 MT baseline, live ticker, audited recovery rates, CO₂/water offsets |
+| **Waste Monitoring & Impact** | Executive waste ledger & national benchmark | UNEP 2024 78.2 MT baseline, live ticker, audited recovery rates |
 | **India Recovery Network** | Regional multi-hub spatial map | Leaflet dark CARTO map, 8 state hubs, surplus vs. shortage gauges |
 | **Surplus Prevention & Logging** | Source segregation & batch intake | Food categorization, storage requirements (>60°C / <4°C), expiry countdown |
 | **Smart Recipient Matching** | Constraint & synergy matching engine | Compatibility scores, road distance/ETA, vehicle capacities, nutrition synergy |
@@ -257,7 +256,6 @@ To ensure transparency, data within the platform is categorized by provenance:
 | **Operational Platform Records** | Donations registered, pickups, deliveries, composted weights | `server/data/db.json` (Platform Database) | Computes audited material diversion and recovery rates. |
 | **Modelled Estimates** | Live Cumulative Household Waste Ticker | Mathematical formula: $78,192,338\text{ t} \times 1,000 \div 31,536,000\text{ s} \approx 2,479.46\text{ kg/s}$ | Illustrative statistical projection (not live sensor measurement). |
 | **Modelled Estimates** | Road Distance & Travel Time | Haversine formula with $1.35\times$ circuity factor & urban speed model | Predicts route travel feasibility. |
-| **Modelled Estimates** | Environmental Offsets | FAO / UNEP ($2.5\text{ kg CO}_2\text{e}/\text{kg}$ food), EPA WARM ($0.85\text{ kg CO}_2\text{e}/\text{kg}$ compost), Water Footprint Network ($750\text{ L}/\text{kg}$) | Calculates estimated avoided emissions and water conservation. |
 | **Synthetic Demonstration Data** | Initial campus dining halls, canteens, volunteer vehicles, sample NGOs | Local Seed Store | Provides realistic demonstration records for hackathon evaluation. |
 
 ---
@@ -344,9 +342,9 @@ To experience the platform during hackathon evaluation:
    - Find your active dispatch and click **"Start Collection / En Route"**.
    - Test the **Dual-Pathway Handover**:
      - *If food is fresh*: Click **"Redistribute (Edible)"** to log human delivery.
-     - *If food passed its deadline*: Notice the **Food Safety Guard** blocks human delivery and prompts **"Divert to Compost"**. Click it to record bio-composting diversion and calculate soil amendment yield.
+     - *If food passed its deadline*: Notice the **Food Safety Guard** blocks human delivery and prompts **"Divert to Compost"**. Click it to record bio-composting diversion.
 7. **Step 6 — Verify Real-Time Impact Ledger** (Return to Tab: `Waste Monitoring & Impact`):
-   - Observe how the audited material recovery metrics (kg collected, kg redistributed or composted, recovery rate %, and CO₂ offsets) update immediately.
+   - Observe how the audited material recovery metrics (kg collected, kg redistributed or composted, and recovery rate %) update immediately.
 8. **Resetting Demo Data**:
    - At any time, click **"Reset Seed Data"** in the top navigation bar to restore the sample database to its clean baseline.
 

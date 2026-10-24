@@ -140,7 +140,7 @@ export function App() {
               NFHS-5 Factsheets Verified
             </span>
             <span className="text-slate-600">|</span>
-            <span className="text-slate-400">UNEP / EPA WARM Accounting</span>
+            <span className="text-slate-400">Verified recovery records</span>
           </div>
         </div>
       </footer>

@@ -245,12 +245,6 @@ export interface DeliveryRecord {
   dispatched_at?: string;
   delivered_at?: string;
   provider_rating?: ProviderRating;
-  environmental_impact: {
-    co2_avoided_kg: number;
-    water_saved_liters: number;
-    economic_value_inr: number;
-    compost_generated_kg?: number;
-  };
 }
 
 export interface ImpactMetrics {
@@ -270,17 +264,11 @@ export interface ImpactMetrics {
     total_meals_delivered: number;
     total_food_weight_kg_rescued: number;
     composted_kg?: number;
-    compost_yield_kg?: number;
     disposed_kg?: number;
     recovery_rate_pct?: number;
     redistribution_rate_pct?: number;
     collection_distance_km?: number;
     collection_efficiency_kg_per_km?: number;
-    environmental_offsets: {
-      co2_emissions_averted_kg: number;
-      water_footprint_saved_liters: number;
-      economic_value_preserved_inr: number;
-    };
     provenance: string;
   };
   macro_context_india: {

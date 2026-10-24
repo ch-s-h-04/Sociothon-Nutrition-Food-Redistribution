@@ -8,14 +8,9 @@ import {
   MapPin,
   RefreshCw,
   Package,
-  Leaf,
-  Droplets,
-  IndianRupee,
-  ShieldCheck,
   Sprout,
   AlertTriangle,
   Trash2,
-  ShieldAlert,
   Star
 } from 'lucide-react';
 
@@ -197,95 +192,15 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
                   </div>
                 </div>
 
-                {/* Environmental Offsets Card */}
-                {del.status === 'diverted_to_compost' ? (
-                  <div className="bg-lime-950/20 p-4 rounded-xl border border-lime-500/30 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase">Diverted Waste</span>
-                      <span className="font-bold text-lime-300 text-sm">{del.food_weight_kg} kg</span>
-                      <span className="text-slate-500 text-[10px] block">Landfill diversion</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase flex items-center gap-1">
-                        <Leaf className="w-3 h-3 text-lime-400" /> Methane Avoided
-                      </span>
-                      <span className="font-bold text-lime-400 text-sm">{del.environmental_impact.co2_avoided_kg} kg CO₂e</span>
-                      <span className="text-slate-500 text-[10px] block">EPA WARM 0.85 kg/kg</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase flex items-center gap-1">
-                        <Sprout className="w-3 h-3 text-emerald-400" /> Compost Yield
-                      </span>
-                      <span className="font-bold text-emerald-400 text-sm">{del.environmental_impact.compost_generated_kg || (del.food_weight_kg * 0.25).toFixed(1)} kg</span>
-                      <span className="text-slate-500 text-[10px] block">Soil organic amendment</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase flex items-center gap-1">
-                        <IndianRupee className="w-3 h-3 text-amber-400" /> Compost Value
-                      </span>
-                      <span className="font-bold text-amber-400 text-sm">₹{del.environmental_impact.economic_value_inr}</span>
-                      <span className="text-slate-500 text-[10px] block">₹8/kg compost value</span>
-                    </div>
-                  </div>
-                ) : del.status === 'disposed' ? (
-                  <div className="bg-rose-950/20 p-4 rounded-xl border border-rose-500/30 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase">Disposed Weight</span>
-                      <span className="font-bold text-rose-300 text-sm">{del.food_weight_kg} kg</span>
-                      <span className="text-slate-500 text-[10px] block">Municipal waste</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase flex items-center gap-1">
-                        <Trash2 className="w-3 h-3 text-rose-400" /> CO₂ Offset
-                      </span>
-                      <span className="font-bold text-slate-400 text-sm">0 kg CO₂e</span>
-                      <span className="text-slate-500 text-[10px] block">Non-recovered</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase flex items-center gap-1">
-                        <Droplets className="w-3 h-3 text-slate-500" /> Water Saved
-                      </span>
-                      <span className="font-bold text-slate-400 text-sm">0 L</span>
-                      <span className="text-slate-500 text-[10px] block">Lost to landfill</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase flex items-center gap-1">
-                        <IndianRupee className="w-3 h-3 text-slate-500" /> Economic Value
-                      </span>
-                      <span className="font-bold text-slate-400 text-sm">₹0</span>
-                      <span className="text-slate-500 text-[10px] block">Total write-off</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="bg-slate-950/70 p-4 rounded-xl border border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-                    <div>
-                      <span className="text-slate-500 block text-[10px] uppercase">Quantity</span>
-                      <span className="font-bold text-white text-sm">{del.quantity_meals} meals</span>
-                      <span className="text-slate-500 text-[10px] block">({del.food_weight_kg} kg)</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block text-[10px] uppercase flex items-center gap-1">
-                        <Leaf className="w-3 h-3 text-emerald-400" /> CO₂ Avoided
-                      </span>
-                      <span className="font-bold text-emerald-400 text-sm">{del.environmental_impact.co2_avoided_kg} kg CO₂e</span>
-                      <span className="text-slate-500 text-[10px] block">2.5 kg CO₂/kg food</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block text-[10px] uppercase flex items-center gap-1">
-                        <Droplets className="w-3.5 h-3 text-cyan-400" /> Water Saved
-                      </span>
-                      <span className="font-bold text-cyan-400 text-sm">{del.environmental_impact.water_saved_liters.toLocaleString()} L</span>
-                      <span className="text-slate-500 text-[10px] block">750 L/kg food</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block text-[10px] uppercase flex items-center gap-1">
-                        <IndianRupee className="w-3 h-3 text-amber-400" /> Economic Value
-                      </span>
-                      <span className="font-bold text-amber-400 text-sm">₹{del.environmental_impact.economic_value_inr.toLocaleString()}</span>
-                      <span className="text-slate-500 text-[10px] block">₹65/meal saved</span>
-                    </div>
-                  </div>
-                )}
+                <div className={`p-4 rounded-xl border grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs ${
+                  del.status === 'diverted_to_compost' ? 'bg-lime-950/20 border-lime-500/30' :
+                  del.status === 'disposed' ? 'bg-rose-950/20 border-rose-500/30' : 'bg-slate-950/70 border-slate-800'
+                }`}>
+                  <div><span className="text-slate-500 block text-[10px] uppercase">Quantity</span><span className="font-bold text-white text-sm">{del.quantity_meals} meals</span><span className="text-slate-500 text-[10px] block">({del.food_weight_kg} kg)</span></div>
+                  <div><span className="text-slate-500 block text-[10px] uppercase">Food type</span><span className="font-bold text-slate-200 text-sm capitalize">{del.food_type}</span></div>
+                  <div><span className="text-slate-500 block text-[10px] uppercase">Dietary type</span><span className="font-bold text-slate-200 text-sm capitalize">{del.dietary_type.replace('_', ' ')}</span></div>
+                  <div><span className="text-slate-500 block text-[10px] uppercase">Recovery path</span><span className="font-bold text-slate-200 text-sm capitalize">{del.recovery_pathway?.replaceAll('_', ' ') || 'Awaiting verification'}</span></div>
+                </div>
 
                 {/* State Machine Transition Actions */}
                 <div className="mt-4 pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
