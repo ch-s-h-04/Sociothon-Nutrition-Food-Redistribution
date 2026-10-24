@@ -7,11 +7,8 @@ This project integrates, expands, and connects components from two open-source h
    - **Author**: Dishank Sen
    - **Reused Components**:
      - Verified National Family Health Survey (NFHS-5, 2019–2021) district factsheet dataset (`data/districts.json`)
-     - Food composition and nutrient profile tables (`data/food_composition.json`)
-     - Cultural dietary rules across Indian demographic groups (`data/cultural_rules.json`)
-     - Fortification vehicle specifications and costing data (`data/fortification_vehicles.json`)
-     - Heuristic risk scoring, linear-programming inspired fortification optimization, and bioavailability-aware meal planning algorithms.
-     - Preserved standalone FastAPI service in `python_service/`.
+     - Heuristic district-level nutrition risk scoring.
+     - Standalone FastAPI nutrition-risk service in `python_service/`.
 
 2. **ReRoute — Intelligent Food Recovery Network**
    - **Original Repository**: [https://github.com/Dishank-Sen/ReRoute](https://github.com/Dishank-Sen/ReRoute)

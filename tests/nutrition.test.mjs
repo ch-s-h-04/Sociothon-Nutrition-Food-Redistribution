@@ -3,9 +3,6 @@ import assert from 'node:assert/strict';
 import {
   getAllDistrictSummaries,
   getDistrictById,
-  optimizeFortification,
-  generateCulturallyAwareMealPlan,
-  getCulturalGroups,
   calculateDistrictOverallRisk,
   getRiskLevel
 } from '../server/services/nutritionService.ts';
@@ -36,37 +33,3 @@ test('Nutrition: getDistrictById returns full micronutrient profile and provenan
   assert.ok(nandurbar.data_provenance.source.includes('NFHS-5'), 'Data provenance must credit NFHS-5');
 });
 
-test('Nutrition: optimizeFortification calculates cost-effective food vehicle allocation', () => {
-  const plan = optimizeFortification('nandurbar');
-  assert.ok(plan, 'Fortification plan should be generated');
-  assert.ok(plan.total_quarterly_budget_lakhs > 0, 'Quarterly budget must be calculated');
-  assert.ok(plan.selected_vehicles.length > 0, 'At least one vehicle should be selected');
-  assert.ok(plan.projected_outcomes.iron, 'Projected reduction for iron should exist');
-  assert.ok(plan.projected_outcomes.iron.projected_reduction_pct > 0, 'Reduction percentage should be positive');
-});
-
-test('Nutrition: generateCulturallyAwareMealPlan respects cultural dietary constraints', () => {
-  const plan = generateCulturallyAwareMealPlan({
-    district: 'nandurbar',
-    cultural_group: 'tribal_hindu',
-    season: 'monsoon'
-  });
-  assert.ok(plan, 'Meal plan generated');
-  assert.equal(plan.weekly_schedule.length, 7, 'Should produce 7-day schedule');
-  assert.ok(plan.estimated_weekly_cost_inr > 0, 'Weekly budget should be computed');
-  assert.ok(plan.bioavailability_notes.length > 0, 'Bioavailability science rules should be present');
-});
-
-test('Nutrition: meal plan adapts to culture and seasonal food data', () => {
-  const vegetarianWinter = generateCulturallyAwareMealPlan({
-    district: 'nandurbar', cultural_group: 'hindu_vegetarian', season: 'winter', budget_inr: 560
-  });
-  const tribalMonsoon = generateCulturallyAwareMealPlan({
-    district: 'nandurbar', cultural_group: 'tribal_hindu', season: 'monsoon', budget_inr: 560
-  });
-  const vegetarianMenu = vegetarianWinter.weekly_schedule.map(day => `${day.breakfast} ${day.lunch} ${day.dinner}`).join(' ').toLowerCase();
-  const tribalMenu = tribalMonsoon.weekly_schedule.map(day => `${day.breakfast} ${day.lunch} ${day.dinner}`).join(' ').toLowerCase();
-
-  assert.equal(vegetarianMenu.includes('egg'), false, 'Vegetarian plan must exclude eggs');
-  assert.notEqual(vegetarianMenu, tribalMenu, 'Culture and season must change selected ingredients');
-});

@@ -79,52 +79,6 @@ export interface DistrictDetail {
   context: any;
 }
 
-export interface FortificationPlan {
-  district_id: string;
-  district_name: string;
-  population: number;
-  total_quarterly_budget_lakhs: number;
-  allocated_budget_lakhs: number;
-  unallocated_budget_lakhs: number;
-  selected_vehicles: Array<{
-    vehicle_id: string;
-    name: string;
-    delivery_channel: string;
-    target_group: string;
-    fortificants: string[];
-    quarterly_cost_lakhs: number;
-    roi_efficiency_score: number;
-    impact_multipliers: Record<string, number>;
-  }>;
-  projected_outcomes: Record<string, {
-    baseline_deficiency_pct: number;
-    post_intervention_pct: number;
-    projected_reduction_pct: number;
-    reduction_relative_pct: number;
-  }>;
-  model_provenance: string;
-}
-
-export interface MealPlan {
-  cultural_group: string;
-  district_context: string;
-  estimated_weekly_cost_inr: number;
-  bioavailability_notes: string[];
-  weekly_schedule: Array<{
-    day: string;
-    breakfast: string;
-    lunch: string;
-    dinner: string;
-    daily_nutrients: {
-      calories: number;
-      iron_mg: number;
-      vit_a_mcg: number;
-      protein_g: number;
-      cost_inr: number;
-    };
-  }>;
-}
-
 export interface RestaurantDonor {
   id: string;
   name: string;

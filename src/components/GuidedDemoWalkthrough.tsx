@@ -3,13 +3,6 @@ import {
   Sparkles,
   ArrowRight,
   CheckCircle2,
-  Activity,
-  UtensilsCrossed,
-  HeartHandshake,
-  Route,
-  Truck,
-  BarChart3,
-  PackageCheck,
   RotateCcw
 } from 'lucide-react';
 
@@ -72,14 +65,6 @@ export const GuidedDemoWalkthrough: React.FC<GuidedDemoWalkthroughProps> = ({
       desc: 'Examine how the completed transaction immediately updates the live impact ledger, calculating exact kilograms of food saved, CO₂ emissions averted (2.5 kg/kg food, 0.85 kg/kg compost), and soil amendment yield.',
       actionText: 'Inspect Audited Environmental Accounting',
       tag: 'Accounting'
-    },
-    {
-      step: 7,
-      title: 'Precision Fortification & Culturally Tailored Diets',
-      targetTab: 'planner',
-      desc: 'Explore supporting nutrition interventions: linear-programming fortification optimizer allocating PDS vehicles to reduce anemia by 33%, paired with 7-day culturally-appropriate family meal plans respecting local dietary traditions.',
-      actionText: 'Open Supporting Fortification & Meal Planner',
-      tag: 'Supporting'
     }
   ];
 
@@ -112,7 +97,7 @@ export const GuidedDemoWalkthrough: React.FC<GuidedDemoWalkthroughProps> = ({
       </div>
 
       {/* Steps Stepper */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
         {steps.map((s) => {
           const isActive = s.step === currentStep;
           const isDone = s.step < currentStep;
@@ -144,7 +129,7 @@ export const GuidedDemoWalkthrough: React.FC<GuidedDemoWalkthroughProps> = ({
           <div>
             <div className="flex items-center space-x-2">
               <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">
-                STAGE {current.step} OF 7
+                STAGE {current.step} OF {steps.length}
               </span>
               <span className="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-mono">
                 Component: {current.tag}

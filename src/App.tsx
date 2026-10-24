@@ -5,15 +5,13 @@ import { SurplusManagement } from './components/SurplusManagement';
 import { SmartMatching } from './components/SmartMatching';
 import { DeliveryTracker } from './components/DeliveryTracker';
 import { ImpactDashboard } from './components/ImpactDashboard';
-import { CulturalMealPlanner } from './components/CulturalMealPlanner';
 import { api } from './utils/api';
-import { SurplusEvent, DistrictSummary } from './types';
+import { SurplusEvent } from './types';
 import { Heart, Github, ExternalLink } from 'lucide-react';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<string>('matching');
   const [surplusListings, setSurplusListings] = useState<SurplusEvent[]>([]);
-  const [districts, setDistricts] = useState<DistrictSummary[]>([]);
   const [selectedSurplusId, setSelectedSurplusId] = useState<string>('');
   const [targetDistrict, setTargetDistrict] = useState<string>('Nandurbar');
   const [isResetting, setIsResetting] = useState<boolean>(false);
@@ -24,12 +22,8 @@ export function App() {
 
   const loadGlobalData = async () => {
     try {
-      const [surplusRes, distRes] = await Promise.all([
-        api.surplus.getAll(),
-        api.nutrition.getDistricts()
-      ]);
+      const surplusRes = await api.surplus.getAll();
       setSurplusListings(surplusRes);
-      setDistricts(distRes.districts);
       if (surplusRes.length > 0 && !selectedSurplusId) {
         setSelectedSurplusId(surplusRes[0].id);
       }
@@ -114,12 +108,6 @@ export function App() {
           <ImpactDashboard />
         )}
 
-        {activeTab === 'planner' && (
-          <CulturalMealPlanner
-            districts={districts}
-            initialDistrictId="nandurbar"
-          />
-        )}
       </main>
 
       {/* Unified Footer */}

@@ -213,7 +213,7 @@
       "state": "Maharashtra",
       "service_radius_km": 18,
       "daily_capacity_meals": 250,
-      "current_capacity_meals": 180,
+      "current_capacity_meals": 80,
       "accepted_food_types": [
         "cooked meals",
         "rice",
@@ -839,7 +839,7 @@
       "capacity_meals": 120,
       "current_latitude": 21.371,
       "current_longitude": 74.241,
-      "available_at": "2026-10-24T10:58:13.430Z",
+      "available_at": "2026-10-24T11:29:19.954Z",
       "status": "available"
     },
     {
@@ -850,7 +850,7 @@
       "capacity_meals": 150,
       "current_latitude": 22.656,
       "current_longitude": 85.826,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -861,7 +861,7 @@
       "capacity_meals": 100,
       "current_latitude": 27.586,
       "current_longitude": 81.606,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -872,7 +872,7 @@
       "capacity_meals": 160,
       "current_latitude": 12.966,
       "current_longitude": 77.601,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -883,7 +883,7 @@
       "capacity_meals": 110,
       "current_latitude": 22.286,
       "current_longitude": 74.356,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -894,7 +894,7 @@
       "capacity_meals": 200,
       "current_latitude": 28.614,
       "current_longitude": 77.2095,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -905,7 +905,7 @@
       "capacity_meals": 180,
       "current_latitude": 22.573,
       "current_longitude": 88.3642,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -916,7 +916,7 @@
       "capacity_meals": 175,
       "current_latitude": 13.083,
       "current_longitude": 80.271,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -927,7 +927,7 @@
       "capacity_meals": 150,
       "current_latitude": 23.023,
       "current_longitude": 72.572,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -938,7 +938,7 @@
       "capacity_meals": 130,
       "current_latitude": 26.2395,
       "current_longitude": 73.025,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -949,7 +949,7 @@
       "capacity_meals": 140,
       "current_latitude": 27.701,
       "current_longitude": 82.001,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -960,7 +960,7 @@
       "capacity_meals": 120,
       "current_latitude": 18.814,
       "current_longitude": 82.713,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -971,7 +971,7 @@
       "capacity_meals": 220,
       "current_latitude": 19.077,
       "current_longitude": 72.878,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -982,7 +982,7 @@
       "capacity_meals": 170,
       "current_latitude": 17.386,
       "current_longitude": 78.4875,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -993,7 +993,7 @@
       "capacity_meals": 145,
       "current_latitude": 26.145,
       "current_longitude": 91.737,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     },
     {
@@ -1004,11 +1004,37 @@
       "capacity_meals": 160,
       "current_latitude": 9.932,
       "current_longitude": 76.268,
-      "available_at": "2026-10-24T10:58:13.433Z",
+      "available_at": "2026-10-24T11:29:19.955Z",
       "status": "available"
     }
   ],
   "surplusEvents": [
+    {
+      "id": "S-9985-270",
+      "restaurant_id": "D-9985",
+      "donor_name": "IIT Dining Hall Canteen",
+      "pickup_address": "Central Campus Mess",
+      "pickup_district": "Nandurbar",
+      "pickup_state": "Maharashtra",
+      "latitude": 21.37,
+      "longitude": 74.24,
+      "food_type": "cooked meals",
+      "dietary_type": "vegetarian",
+      "quantity_meals": 100,
+      "food_weight_kg": 38,
+      "storage_requirement": "ambient",
+      "created_at": "2026-10-24T11:29:19.985Z",
+      "available_at": "2026-10-24T09:29:19.985Z",
+      "expiry_at": "2026-10-24T10:59:19.985Z",
+      "contact_name": "Mess Supervisor",
+      "contact_phone": "+91 98888 12345",
+      "confidence": 90,
+      "status": "diverted_to_compost",
+      "notes": "Leftover rice and vegetable stew.",
+      "assigned_ngo_id": "N01",
+      "assigned_vehicle_id": "V-N01",
+      "delivery_id": "DEL-9986-479"
+    },
     {
       "id": "S-01",
       "restaurant_id": "R02",
@@ -1023,9 +1049,9 @@
       "quantity_meals": 65,
       "food_weight_kg": 24.7,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:38:13.433Z",
-      "available_at": "2026-10-24T10:48:13.433Z",
-      "expiry_at": "2026-10-24T12:48:13.433Z",
+      "created_at": "2026-10-24T11:09:19.955Z",
+      "available_at": "2026-10-24T11:19:19.955Z",
+      "expiry_at": "2026-10-24T13:19:19.955Z",
       "contact_name": "Ganesh Shinde",
       "contact_phone": "+91 94220 88765",
       "confidence": 92,
@@ -1046,9 +1072,9 @@
       "quantity_meals": 50,
       "food_weight_kg": 19,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:28:13.433Z",
-      "available_at": "2026-10-24T10:43:13.433Z",
-      "expiry_at": "2026-10-24T12:43:13.433Z",
+      "created_at": "2026-10-24T10:59:19.955Z",
+      "available_at": "2026-10-24T11:14:19.955Z",
+      "expiry_at": "2026-10-24T13:14:19.955Z",
       "contact_name": "Anup Tirkey",
       "contact_phone": "+91 93340 76543",
       "confidence": 89,
@@ -1069,9 +1095,9 @@
       "quantity_meals": 45,
       "food_weight_kg": 17.1,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:18:13.433Z",
-      "available_at": "2026-10-24T10:38:13.433Z",
-      "expiry_at": "2026-10-24T12:18:13.433Z",
+      "created_at": "2026-10-24T10:49:19.955Z",
+      "available_at": "2026-10-24T11:09:19.955Z",
+      "expiry_at": "2026-10-24T12:49:19.955Z",
       "contact_name": "Ramesh Hegde",
       "contact_phone": "+91 98450 11234",
       "confidence": 94,
@@ -1079,6 +1105,39 @@
       "notes": "Steamed rice, mixed vegetable sambar, and ragi mudde."
     }
   ],
-  "deliveries": [],
-  "lastUpdated": "2026-10-24T10:58:13.440Z"
+  "deliveries": [
+    {
+      "id": "DEL-9986-479",
+      "surplus_id": "S-9985-270",
+      "donor_id": "D-9985",
+      "donor_name": "IIT Dining Hall Canteen",
+      "ngo_id": "N01",
+      "ngo_name": "Asha Poshan Collective",
+      "vehicle_id": "V-N01",
+      "driver_name": "Dinesh Pawar",
+      "quantity_meals": 100,
+      "food_weight_kg": 38,
+      "food_type": "cooked meals",
+      "dietary_type": "vegetarian",
+      "status": "diverted_to_compost",
+      "pickup_lat": 21.37,
+      "pickup_lng": 74.24,
+      "dropoff_lat": 21.37,
+      "dropoff_lng": 74.24,
+      "estimated_distance_km": 0,
+      "estimated_time_minutes": 6,
+      "assigned_at": "2026-10-24T11:29:19.986Z",
+      "environmental_impact": {
+        "co2_avoided_kg": 32.3,
+        "water_saved_liters": 0,
+        "economic_value_inr": 76,
+        "compost_generated_kg": 9.5
+      },
+      "dispatched_at": "2026-10-24T11:29:19.990Z",
+      "recovery_notes": "Diverted to organic farm bio-composter.",
+      "recovery_pathway": "composting_resource_recovery",
+      "delivered_at": "2026-10-24T11:29:19.992Z"
+    }
+  ],
+  "lastUpdated": "2026-10-24T11:29:19.994Z"
 }

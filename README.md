@@ -131,11 +131,7 @@ The platform operationalizes a five-stage closed-loop lifecycle that intercepts 
 - **NFHS-5 Factsheet Integration**: District-level child malnutrition data (stunting %, wasting %, anemia %) across Indian aspirational districts.
 - **Geographic Vulnerability Prioritization**: Allows operators to target food recovery initiatives to areas experiencing acute nutritional deficits.
 
-### 8. Fortify & Meal Planner (Supporting)
-- **Linear-Programming Fortification Optimizer**: Calculates cost-effective micronutrient vehicle allocations (iodized/iron-fortified salt, fortified oil, wheat flour, rice).
-- **Cultural Meal Planner**: Formulates balanced meal plans respecting regional and demographic dietary constraints.
-
-### 9. Guided Sociothon Demo
+### 8. Guided Sociothon Demo
 - **7-Step Judge Walkthrough**: Built-in interactive evaluator wizard that guides reviewers through logging surplus, algorithmic matching, dispatching routes, executing multi-pathway handover, and observing immediate impact ledger updates.
 
 ---
@@ -361,7 +357,7 @@ The codebase includes an automated test suite executed via the native Node.js te
 npm test
 ```
 
-### Verified Test Results (19/19 Passing):
+### Verified Test Results (17/17 Passing):
 ```text
 > sociothon-nutrition-food-redistribution@1.0.0 test
 > node --test tests/**/*.test.mjs
@@ -375,8 +371,6 @@ npm test
 ✔ Nutrition: getRiskLevel categorizes percentages properly (1.5ms)
 ✔ Nutrition: getAllDistrictSummaries returns verified NFHS-5 factsheet districts (1.2ms)
 ✔ Nutrition: getDistrictById returns full micronutrient profile and provenance (1.0ms)
-✔ Nutrition: optimizeFortification calculates cost-effective food vehicle allocation (1.3ms)
-✔ Nutrition: generateCulturallyAwareMealPlan respects cultural dietary constraints (0.6ms)
 ✔ Routing: generateInterpolatedWaypoints produces valid coordinate paths (2.0ms)
 ✔ Routing: optimizeFleetRoutes respects vehicle capacities and deadline feasibility (3.3ms)
 ✔ Routing: optimizeHubLocations selects medoids among donor locations (1.4ms)

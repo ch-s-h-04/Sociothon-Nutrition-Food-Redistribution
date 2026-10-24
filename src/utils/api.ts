@@ -1,8 +1,6 @@
 import {
   DistrictSummary,
   DistrictDetail,
-  FortificationPlan,
-  MealPlan,
   RestaurantDonor,
   RecipientNGO,
   FleetVehicle,
@@ -43,10 +41,6 @@ export const api = {
   nutrition: {
     getDistricts: () => fetchJson<{ total: number; districts: DistrictSummary[]; metadata: any }>('/nutrition/districts'),
     getDistrictById: (id: string) => fetchJson<DistrictDetail>(`/nutrition/districts/${id}`),
-    getFortificationPlan: (districtId: string) => fetchJson<FortificationPlan>(`/nutrition/fortify/${districtId}`),
-    getCulturalGroups: () => fetchJson<{ groups: any[] }>('/nutrition/cultural-groups'),
-    generateMealPlan: (req: { district?: string; cultural_group?: string; budget_inr?: number; season?: string }) =>
-      fetchJson<MealPlan>('/nutrition/meals/generate', { method: 'POST', body: JSON.stringify(req) }),
     getStatesOverview: () => fetchJson<{ states: any[] }>('/nutrition/states')
   },
 

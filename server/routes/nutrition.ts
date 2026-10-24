@@ -2,9 +2,6 @@ import express, { type Request, type Response } from 'express';
 import {
   getAllDistrictSummaries,
   getDistrictById,
-  optimizeFortification,
-  generateCulturallyAwareMealPlan,
-  getCulturalGroups,
   getStateNutritionOverview
 } from '../services/nutritionService.ts';
 
@@ -39,39 +36,6 @@ router.get('/districts/:id', (req: Request, res: Response) => {
     res.json(profile);
   } catch (err: any) {
     res.status(500).json({ error: 'Failed to retrieve district profile', details: err.message });
-  }
-});
-
-// GET /api/nutrition/fortify/:id - Precision fortification plan
-router.get('/fortify/:id', (req: Request, res: Response) => {
-  try {
-    const plan = optimizeFortification(req.params.id);
-    if (!plan) {
-      res.status(404).json({ error: `District '${req.params.id}' not found` });
-      return;
-    }
-    res.json(plan);
-  } catch (err: any) {
-    res.status(500).json({ error: 'Fortification optimization failed', details: err.message });
-  }
-});
-
-// GET /api/nutrition/cultural-groups - List supported cultural groups
-router.get('/cultural-groups', (_req: Request, res: Response) => {
-  try {
-    res.json({ groups: getCulturalGroups() });
-  } catch (err: any) {
-    res.status(500).json({ error: 'Failed to load cultural groups', details: err.message });
-  }
-});
-
-// POST /api/nutrition/meals/generate - Generate culturally-appropriate meal plan
-router.post('/meals/generate', (req: Request, res: Response) => {
-  try {
-    const plan = generateCulturallyAwareMealPlan(req.body);
-    res.json(plan);
-  } catch (err: any) {
-    res.status(500).json({ error: 'Meal plan generation failed', details: err.message });
   }
 });
 
