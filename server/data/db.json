@@ -662,6 +662,172 @@
         "PVTG Tribal Hamlets",
         "Malnourished Adolescent Girls"
       ]
+    },
+    {
+      "id": "N13",
+      "name": "Mumbai Seva Bhojan Network",
+      "latitude": 19.0765,
+      "longitude": 72.8772,
+      "address": "Dr. D. N. Road, Fort Community Hub",
+      "district": "Mumbai City",
+      "state": "Maharashtra",
+      "service_radius_km": 18,
+      "daily_capacity_meals": 500,
+      "current_capacity_meals": 375,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "bread",
+        "vegetables",
+        "packaged food",
+        "bakery",
+        "mixed meals"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "vegan",
+        "mixed",
+        "non_vegetarian"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "cold_storage",
+        "hot_holding"
+      ],
+      "operating_hours": "06:00â€“23:00",
+      "contact_phone": "+91 98201 44567",
+      "contact_person": "Ayesha Merchant",
+      "vehicle_available": true,
+      "reliability_score": 96,
+      "active": true,
+      "target_demographics": [
+        "Construction Worker Families",
+        "Night Shelter Residents",
+        "Street-Connected Children"
+      ]
+    },
+    {
+      "id": "N14",
+      "name": "Deccan Annapurna Collective",
+      "latitude": 17.3854,
+      "longitude": 78.4867,
+      "address": "Nampally Community Centre, Red Hills",
+      "district": "Hyderabad",
+      "state": "Telangana",
+      "service_radius_km": 20,
+      "daily_capacity_meals": 360,
+      "current_capacity_meals": 275,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "bread",
+        "vegetables",
+        "mixed meals"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "vegan",
+        "mixed",
+        "non_vegetarian"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "hot_holding",
+        "cold_storage"
+      ],
+      "operating_hours": "07:00â€“22:30",
+      "contact_phone": "+91 98490 67231",
+      "contact_person": "S. Kavitha Reddy",
+      "vehicle_available": true,
+      "reliability_score": 94,
+      "active": true,
+      "target_demographics": [
+        "Urban Informal Workers",
+        "Government Hospital Attendants",
+        "Hostel Students in Need"
+      ]
+    },
+    {
+      "id": "N15",
+      "name": "Brahmaputra Community Meal Trust",
+      "latitude": 26.1445,
+      "longitude": 91.7362,
+      "address": "Paltan Bazar Relief Centre, Guwahati",
+      "district": "Kamrup Metropolitan",
+      "state": "Assam",
+      "service_radius_km": 24,
+      "daily_capacity_meals": 300,
+      "current_capacity_meals": 225,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "bread",
+        "vegetables",
+        "mixed meals"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "mixed",
+        "non_vegetarian"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "hot_holding"
+      ],
+      "operating_hours": "06:30â€“21:30",
+      "contact_phone": "+91 97060 33456",
+      "contact_person": "Rupali Das",
+      "vehicle_available": true,
+      "reliability_score": 92,
+      "active": true,
+      "target_demographics": [
+        "Flood-Affected Families",
+        "Tea Garden Worker Households",
+        "Railway Station Homeless"
+      ]
+    },
+    {
+      "id": "N16",
+      "name": "Malabar Food Solidarity Forum",
+      "latitude": 9.9312,
+      "longitude": 76.2673,
+      "address": "Broadway Market Community Kitchen, Ernakulam",
+      "district": "Ernakulam",
+      "state": "Kerala",
+      "service_radius_km": 18,
+      "daily_capacity_meals": 340,
+      "current_capacity_meals": 255,
+      "accepted_food_types": [
+        "cooked meals",
+        "rice",
+        "bread",
+        "vegetables",
+        "packaged food",
+        "bakery",
+        "mixed meals"
+      ],
+      "accepted_dietary_types": [
+        "vegetarian",
+        "vegan",
+        "mixed",
+        "non_vegetarian"
+      ],
+      "storage_capabilities": [
+        "ambient",
+        "cold_storage",
+        "hot_holding"
+      ],
+      "operating_hours": "07:00â€“22:00",
+      "contact_phone": "+91 98950 11892",
+      "contact_person": "Lijo Mathew",
+      "vehicle_available": true,
+      "reliability_score": 95,
+      "active": true,
+      "target_demographics": [
+        "Coastal Worker Families",
+        "Elderly Living Alone",
+        "Migrant Labour Settlements"
+      ]
     }
   ],
   "vehicles": [
@@ -673,7 +839,7 @@
       "capacity_meals": 120,
       "current_latitude": 21.371,
       "current_longitude": 74.241,
-      "available_at": "2026-10-24T10:34:43.112Z",
+      "available_at": "2026-10-24T10:41:51.924Z",
       "status": "available"
     },
     {
@@ -684,7 +850,7 @@
       "capacity_meals": 150,
       "current_latitude": 22.656,
       "current_longitude": 85.826,
-      "available_at": "2026-10-24T10:34:43.113Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -695,7 +861,7 @@
       "capacity_meals": 100,
       "current_latitude": 27.586,
       "current_longitude": 81.606,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -706,7 +872,7 @@
       "capacity_meals": 160,
       "current_latitude": 12.966,
       "current_longitude": 77.601,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -717,7 +883,7 @@
       "capacity_meals": 110,
       "current_latitude": 22.286,
       "current_longitude": 74.356,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -728,7 +894,7 @@
       "capacity_meals": 200,
       "current_latitude": 28.614,
       "current_longitude": 77.2095,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -739,7 +905,7 @@
       "capacity_meals": 180,
       "current_latitude": 22.573,
       "current_longitude": 88.3642,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -750,7 +916,7 @@
       "capacity_meals": 175,
       "current_latitude": 13.083,
       "current_longitude": 80.271,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -761,7 +927,7 @@
       "capacity_meals": 150,
       "current_latitude": 23.023,
       "current_longitude": 72.572,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -772,7 +938,7 @@
       "capacity_meals": 130,
       "current_latitude": 26.2395,
       "current_longitude": 73.025,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -783,7 +949,7 @@
       "capacity_meals": 140,
       "current_latitude": 27.701,
       "current_longitude": 82.001,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     },
     {
@@ -794,7 +960,51 @@
       "capacity_meals": 120,
       "current_latitude": 18.814,
       "current_longitude": 82.713,
-      "available_at": "2026-10-24T10:34:43.114Z",
+      "available_at": "2026-10-24T10:41:51.926Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N13",
+      "ngo_id": "N13",
+      "driver_name": "Prakash Jadhav",
+      "driver_phone": "+91 98201 99218",
+      "capacity_meals": 220,
+      "current_latitude": 19.077,
+      "current_longitude": 72.878,
+      "available_at": "2026-10-24T10:41:51.926Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N14",
+      "ngo_id": "N14",
+      "driver_name": "Mohammed Rahman",
+      "driver_phone": "+91 98490 77345",
+      "capacity_meals": 170,
+      "current_latitude": 17.386,
+      "current_longitude": 78.4875,
+      "available_at": "2026-10-24T10:41:51.926Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N15",
+      "ngo_id": "N15",
+      "driver_name": "Bikash Kalita",
+      "driver_phone": "+91 97060 88421",
+      "capacity_meals": 145,
+      "current_latitude": 26.145,
+      "current_longitude": 91.737,
+      "available_at": "2026-10-24T10:41:51.926Z",
+      "status": "available"
+    },
+    {
+      "id": "V-N16",
+      "ngo_id": "N16",
+      "driver_name": "Shibu Varghese",
+      "driver_phone": "+91 98950 77102",
+      "capacity_meals": 160,
+      "current_latitude": 9.932,
+      "current_longitude": 76.268,
+      "available_at": "2026-10-24T10:41:51.926Z",
       "status": "available"
     }
   ],
@@ -813,9 +1023,9 @@
       "quantity_meals": 65,
       "food_weight_kg": 24.7,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:14:43.114Z",
-      "available_at": "2026-10-24T10:24:43.114Z",
-      "expiry_at": "2026-10-24T12:24:43.114Z",
+      "created_at": "2026-10-24T10:21:51.926Z",
+      "available_at": "2026-10-24T10:31:51.926Z",
+      "expiry_at": "2026-10-24T12:31:51.926Z",
       "contact_name": "Ganesh Shinde",
       "contact_phone": "+91 94220 88765",
       "confidence": 92,
@@ -836,9 +1046,9 @@
       "quantity_meals": 50,
       "food_weight_kg": 19,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:04:43.114Z",
-      "available_at": "2026-10-24T10:19:43.114Z",
-      "expiry_at": "2026-10-24T12:19:43.114Z",
+      "created_at": "2026-10-24T10:11:51.926Z",
+      "available_at": "2026-10-24T10:26:51.926Z",
+      "expiry_at": "2026-10-24T12:26:51.926Z",
       "contact_name": "Anup Tirkey",
       "contact_phone": "+91 93340 76543",
       "confidence": 89,
@@ -859,9 +1069,9 @@
       "quantity_meals": 45,
       "food_weight_kg": 17.1,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T09:54:43.114Z",
-      "available_at": "2026-10-24T10:14:43.114Z",
-      "expiry_at": "2026-10-24T11:54:43.114Z",
+      "created_at": "2026-10-24T10:01:51.926Z",
+      "available_at": "2026-10-24T10:21:51.926Z",
+      "expiry_at": "2026-10-24T12:01:51.926Z",
       "contact_name": "Ramesh Hegde",
       "contact_phone": "+91 98450 11234",
       "confidence": 94,
@@ -870,5 +1080,5 @@
     }
   ],
   "deliveries": [],
-  "lastUpdated": "2026-10-24T10:34:43.295Z"
+  "lastUpdated": "2026-10-24T10:41:51.930Z"
 }
