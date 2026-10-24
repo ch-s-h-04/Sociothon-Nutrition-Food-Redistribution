@@ -274,66 +274,81 @@ export function generateCulturallyAwareMealPlan(req: {
   const groupRules = culturalRulesData[groupKey] || culturalRulesData['tribal_hindu'];
   const districtProfile = req.district ? getDistrictById(req.district) : null;
 
-  const meals = [
-    {
-      day: 'Monday',
-      breakfast: 'Ragi porridge with jaggery and roasted groundnuts (High Iron & Calcium)',
-      lunch: 'Fortified rice with drumstick leaf dal, amaranth saag, and lemon wedge (Vitamin C boosts iron absorption)',
-      dinner: 'Bajra roti with horsegram curry and seasonal pumpkin sabzi',
-      daily_nutrients: { calories: 2150, iron_mg: 28, vit_a_mcg: 780, protein_g: 58, cost_inr: 82 }
-    },
-    {
-      day: 'Tuesday',
-      breakfast: 'Sprouted moong chaat with chopped tomatoes and lemon juice',
-      lunch: 'Rice khichdi cooked in fortified oil, spinach tadka, and probiotic curd',
-      dinner: 'Wheat-millet flatbread with mixed dal and bottle gourd sabzi',
-      daily_nutrients: { calories: 2080, iron_mg: 26, vit_a_mcg: 820, protein_g: 54, cost_inr: 78 }
-    },
-    {
-      day: 'Wednesday',
-      breakfast: 'Sattu drink with roasted cumin, mint, and lemon + banana',
-      lunch: 'Fortified rice with red ant chutney / local lentil stew and moringa leaves',
-      dinner: 'Jowar roti with roasted chana and green leafy vegetable curry',
-      daily_nutrients: { calories: 2200, iron_mg: 31, vit_a_mcg: 750, protein_g: 62, cost_inr: 85 }
-    },
-    {
-      day: 'Thursday',
-      breakfast: 'Oat and ragi dalia cooked with fortified milk and seasonal fruit',
-      lunch: 'Brown/fortified rice with rajma curry and steamed wild greens',
-      dinner: 'Millet porridge with tempered buttermilk and seasonal gourd curry',
-      daily_nutrients: { calories: 2100, iron_mg: 27, vit_a_mcg: 790, protein_g: 56, cost_inr: 80 }
-    },
-    {
-      day: 'Friday',
-      breakfast: 'Ragi mudde with toor dal saaru and lemon wedge',
-      lunch: 'Rice with egg or horsegram curry, drumstick pods, and tomato salad',
-      dinner: 'Bajra roti with roasted aubergine bharta and garlic-spinach tadka',
-      daily_nutrients: { calories: 2250, iron_mg: 29, vit_a_mcg: 850, protein_g: 64, cost_inr: 88 }
-    },
-    {
-      day: 'Saturday',
-      breakfast: 'Vegetable upma prepared with mustard seeds, curry leaves, and peanuts',
-      lunch: 'Khichdi with fortified oil, seasonal forest tubers, and curd',
-      dinner: 'Wheat roti with mixed pulse dal and fenugreek (methi) greens',
-      daily_nutrients: { calories: 2120, iron_mg: 25, vit_a_mcg: 740, protein_g: 52, cost_inr: 76 }
-    },
-    {
-      day: 'Sunday',
-      breakfast: 'Steamed rice idlis with iron-rich drumstick sambar and tomato chutney',
-      lunch: 'Fortified rice with community feast dal, amaranth stir-fry, and fresh lime',
-      dinner: 'Mixed flour rotis with spiced chickpea curry and seasonal greens',
-      daily_nutrients: { calories: 2280, iron_mg: 30, vit_a_mcg: 810, protein_g: 60, cost_inr: 90 }
-    }
-  ];
+  type Food = { id: string; name: string; category: string; per_100g: Record<string, number>; cost_per_100g: number; tags: string[]; seasonality: string };
+  const foods: Food[] = Object.entries(foodCompData).map(([id, item]: [string, any]) => ({ id, ...item }));
+  const season = req.season || 'year_round';
+  const dailyBudget = Math.max(35, (req.budget_inr || 560) / 7);
+  const excluded = new Set((groupRules.excluded_foods || []).map((item: string) => item.toLowerCase().replace(/s$/, '')));
+  const priorityRisks = districtProfile?.micronutrients || {};
+  const nutrientWeights: Record<string, number> = {
+    iron_mg: priorityRisks.iron?.risk_pct || 35,
+    zinc_mg: priorityRisks.zinc?.risk_pct || 25,
+    vitamin_a_mcg: priorityRisks.vitamin_a?.risk_pct || 25,
+    b12_mcg: priorityRisks.b12?.risk_pct || 20,
+    vitamin_d_mcg: priorityRisks.vitamin_d?.risk_pct || 20,
+    protein: (districtProfile?.district_context?.stunting_pct || 25) + (districtProfile?.district_context?.wasting_pct || 10)
+  };
+  const forbidden = (food: Food) => {
+    const text = `${food.id} ${food.name} ${food.tags.join(' ')}`.toLowerCase();
+    const terms = [...excluded].flatMap(term => term === 'egg' ? ['egg'] : term === 'root_vegetable' ? ['potato', 'carrot', 'beet', 'root'] : [term]);
+    return terms.some(term => text.includes(term));
+  };
+  const allowed = foods.filter(food => !forbidden(food) && (food.seasonality === 'year_round' || food.seasonality === season));
+  const score = (food: Food) => {
+    const nutrients = food.per_100g;
+    const needScore = Object.entries(nutrientWeights).reduce((total, [nutrient, weight]) => total + ((nutrients[nutrient] || 0) * weight), 0);
+    const culturalBoost = (groupRules.preferred_staples || []).some((item: string) => food.id.includes(item) || food.name.toLowerCase().includes(item.replace(/_/g, ' '))) ? 180 : 0;
+    const ironBoost = (groupRules.iron_sources || []).some((item: string) => food.id.includes(item) || food.name.toLowerCase().includes(item.replace(/_/g, ' '))) ? 160 : 0;
+    return needScore + culturalBoost + ironBoost - food.cost_per_100g * (dailyBudget < 70 ? 30 : 8);
+  };
+  const byCategory = (category: string) => allowed.filter(food => food.category === category).sort((a, b) => score(b) - score(a));
+  const pick = (category: string, day: number, fallbackCategory?: string) => {
+    const choices = byCategory(category);
+    const fallback = fallbackCategory ? byCategory(fallbackCategory) : [];
+    const pool = choices.length ? choices : fallback.length ? fallback : allowed;
+    return pool[day % Math.min(pool.length, 4)];
+  };
+  const serving = (food: Food, grams: number) => {
+    const factor = grams / 100;
+    return {
+      calories: (food.per_100g.calories || 0) * factor, protein: (food.per_100g.protein || 0) * factor,
+      iron_mg: (food.per_100g.iron_mg || 0) * factor, vit_a_mcg: (food.per_100g.vitamin_a_mcg || 0) * factor,
+      cost_inr: food.cost_per_100g * factor
+    };
+  };
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const meals = days.map((day, index) => {
+    const breakfastCereal = pick('cereal', index);
+    const breakfastSide = pick('fruit', index + 1, 'seed');
+    const lunchStaple = pick('cereal', index + 1);
+    const lunchProtein = pick('legume', index, 'protein');
+    const lunchVegetable = pick('vegetable', index);
+    const dinnerStaple = pick('cereal', index + 2);
+    const dinnerProtein = pick('protein', index + 1, 'legume');
+    const dinnerVegetable = pick('vegetable', index + 2);
+    const vitaminC = allowed.filter(food => food.tags.includes('iron_absorption_booster')).sort((a, b) => score(b) - score(a))[index % Math.max(1, allowed.filter(food => food.tags.includes('iron_absorption_booster')).length)] || breakfastSide;
+    const portions = [[breakfastCereal, 90], [breakfastSide, 100], [lunchStaple, 140], [lunchProtein, 90], [lunchVegetable, 120], [vitaminC, 30], [dinnerStaple, 120], [dinnerProtein, 85], [dinnerVegetable, 120]] as Array<[Food, number]>;
+    const totals = portions.reduce((sum, [food, grams]) => {
+      const item = serving(food, grams);
+      return { calories: sum.calories + item.calories, protein: sum.protein + item.protein, iron_mg: sum.iron_mg + item.iron_mg, vit_a_mcg: sum.vit_a_mcg + item.vit_a_mcg, cost_inr: sum.cost_inr + item.cost_inr };
+    }, { calories: 0, protein: 0, iron_mg: 0, vit_a_mcg: 0, cost_inr: 0 });
+    return {
+      day,
+      breakfast: `${breakfastCereal.name} with ${breakfastSide.name}`,
+      lunch: `${lunchStaple.name} with ${lunchProtein.name}, ${lunchVegetable.name}, and ${vitaminC.name}`,
+      dinner: `${dinnerStaple.name} with ${dinnerProtein.name} and ${dinnerVegetable.name}`,
+      daily_nutrients: { calories: Math.round(totals.calories), protein_g: Number(totals.protein.toFixed(1)), iron_mg: Number(totals.iron_mg.toFixed(1)), vit_a_mcg: Math.round(totals.vit_a_mcg), cost_inr: Math.round(totals.cost_inr) }
+    };
+  });
 
   return {
     cultural_group: groupRules.label,
     district_context: districtProfile ? districtProfile.district_name : 'General Pan-India',
     estimated_weekly_cost_inr: meals.reduce((sum, m) => sum + m.daily_nutrients.cost_inr, 0),
     bioavailability_notes: [
-      'Iron absorption maximized by pairing plant iron (non-heme) with Vitamin C rich lemon and amaranth.',
-      'Calcium and iron sources are partitioned between morning and evening meals to avoid competitive uptake.',
-      'Traditional cooking in iron utensils recommended to provide additional dietary iron.'
+      `Ingredient ranking prioritizes ${Object.entries(priorityRisks).sort(([, a]: any, [, b]: any) => (b.risk_pct || 0) - (a.risk_pct || 0)).slice(0, 3).map(([nutrient]) => nutrient.replace('_', ' ')).join(', ') || 'district nutrition risks'} for ${districtProfile?.district_name || 'the selected district'}.`,
+      `Only foods compatible with ${groupRules.label} restrictions and ${season} availability are eligible for this schedule.`,
+      `A weekly budget of ₹${Math.round(dailyBudget * 7)} guides lower-cost ingredient ranking; vitamin-C foods are paired with iron sources where available.`
     ],
     weekly_schedule: meals
   };

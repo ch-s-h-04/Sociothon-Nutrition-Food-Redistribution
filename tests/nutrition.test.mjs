@@ -56,3 +56,17 @@ test('Nutrition: generateCulturallyAwareMealPlan respects cultural dietary const
   assert.ok(plan.estimated_weekly_cost_inr > 0, 'Weekly budget should be computed');
   assert.ok(plan.bioavailability_notes.length > 0, 'Bioavailability science rules should be present');
 });
+
+test('Nutrition: meal plan adapts to culture and seasonal food data', () => {
+  const vegetarianWinter = generateCulturallyAwareMealPlan({
+    district: 'nandurbar', cultural_group: 'hindu_vegetarian', season: 'winter', budget_inr: 560
+  });
+  const tribalMonsoon = generateCulturallyAwareMealPlan({
+    district: 'nandurbar', cultural_group: 'tribal_hindu', season: 'monsoon', budget_inr: 560
+  });
+  const vegetarianMenu = vegetarianWinter.weekly_schedule.map(day => `${day.breakfast} ${day.lunch} ${day.dinner}`).join(' ').toLowerCase();
+  const tribalMenu = tribalMonsoon.weekly_schedule.map(day => `${day.breakfast} ${day.lunch} ${day.dinner}`).join(' ').toLowerCase();
+
+  assert.equal(vegetarianMenu.includes('egg'), false, 'Vegetarian plan must exclude eggs');
+  assert.notEqual(vegetarianMenu, tribalMenu, 'Culture and season must change selected ingredients');
+});

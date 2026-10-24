@@ -26,6 +26,8 @@ export const CulturalMealPlanner: React.FC<CulturalMealPlannerProps> = ({
   const [selectedDistrict, setSelectedDistrict] = useState<string>(initialDistrictId);
   const [culturalGroups, setCulturalGroups] = useState<any[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string>('tribal_hindu');
+  const [season, setSeason] = useState<string>('monsoon');
+  const [weeklyBudget, setWeeklyBudget] = useState<number>(560);
   const [fortPlan, setFortPlan] = useState<FortificationPlan | null>(null);
   const [mealPlan, setMealPlan] = useState<MealPlan | null>(null);
   const [loadingFort, setLoadingFort] = useState<boolean>(true);
@@ -50,8 +52,8 @@ export const CulturalMealPlanner: React.FC<CulturalMealPlannerProps> = ({
   }, [selectedDistrict]);
 
   useEffect(() => {
-    loadMeals(selectedDistrict, selectedGroup);
-  }, [selectedDistrict, selectedGroup]);
+    loadMeals(selectedDistrict, selectedGroup, season, weeklyBudget);
+  }, [selectedDistrict, selectedGroup, season, weeklyBudget]);
 
   const loadFortification = async (distId: string) => {
     try {
@@ -65,13 +67,14 @@ export const CulturalMealPlanner: React.FC<CulturalMealPlannerProps> = ({
     }
   };
 
-  const loadMeals = async (distId: string, group: string) => {
+  const loadMeals = async (distId: string, group: string, selectedSeason: string, budget: number) => {
     try {
       setLoadingMeals(true);
       const res = await api.nutrition.generateMealPlan({
         district: distId,
         cultural_group: group,
-        season: 'monsoon'
+        season: selectedSeason,
+        budget_inr: budget
       });
       setMealPlan(res);
     } catch (err) {
@@ -112,6 +115,20 @@ export const CulturalMealPlanner: React.FC<CulturalMealPlannerProps> = ({
               ))}
             </select>
           </div>
+
+          <div>
+            <span className="text-xs text-slate-400 block mb-1">Season:</span>
+            <select value={season} onChange={(e) => setSeason(e.target.value)} className="bg-slate-800 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-emerald-500">
+              <option value="monsoon">Monsoon</option>
+              <option value="summer">Summer</option>
+              <option value="winter">Winter</option>
+            </select>
+          </div>
+
+          <label>
+            <span className="text-xs text-slate-400 block mb-1">Weekly budget (₹):</span>
+            <input type="number" min="245" step="35" value={weeklyBudget} onChange={(e) => setWeeklyBudget(Math.max(245, Number(e.target.value) || 245))} className="w-28 bg-slate-800 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-emerald-500" />
+          </label>
 
           <div>
             <span className="text-xs text-slate-400 block mb-1">Dietary Culture:</span>
