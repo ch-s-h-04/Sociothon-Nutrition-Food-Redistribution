@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { DeliveryRecord, DeliveryStatus, RecoveryPathway } from '../types';
 import { api } from '../utils/api';
 import {
-  Truck,
   CheckCircle2,
   Clock,
   ArrowRight,
@@ -69,9 +68,9 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
   const getStatusBadge = (status: DeliveryStatus) => {
     switch (status) {
       case 'assigned':
-        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">1. Assigned (Driver Dispatched)</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">1. Reserved</span>;
       case 'in_transit':
-        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 animate-pulse">2. En Route / In Transit</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 animate-pulse">2. Collection in progress</span>;
       case 'delivered':
         return <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">3. Delivered (Human Redistribution)</span>;
       case 'diverted_to_compost':
@@ -94,7 +93,7 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
             SOCIOTHON 2026 · COLLECTION & RESOURCE RECOVERY
           </span>
           <h1 className="text-2xl font-extrabold text-white tracking-tight mt-1">
-            Collection Fleet & Multi-Pathway Recovery Tracking
+            Food Reservation & Recovery Tracking
           </h1>
           <p className="text-sm text-slate-400 mt-1">
             End-to-end custody verification. Validates safe consumption deadlines, prevents unsafe distribution of expired food, and enables organic bio-composting diversion for non-edible surplus.
@@ -116,10 +115,10 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
         </div>
       ) : deliveries.length === 0 ? (
         <div className="bg-slate-900 rounded-2xl border border-slate-800 p-8 text-center space-y-3">
-          <Truck className="w-10 h-10 text-slate-500 mx-auto" />
-          <h3 className="text-base font-bold text-white">No Active Delivery Dispatches Yet</h3>
+          <Package className="w-10 h-10 text-slate-500 mx-auto" />
+          <h3 className="text-base font-bold text-white">No Food Reservations Yet</h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">
-            Go to the Smart NGO Matching tab and click "Assign Donation & Dispatch Route" on any available surplus listing.
+            Go to the NGO Matching tab and reserve an available food donation.
           </p>
         </div>
       ) : (
@@ -148,8 +147,6 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
                       <h3 className="text-lg font-bold text-emerald-300">{del.ngo_name}</h3>
                     </div>
                     <p className="text-xs text-slate-400 mt-1 flex items-center gap-3">
-                      <span>Vehicle: <strong className="text-slate-200">{del.vehicle_id}</strong></span>
-                      <span>Driver: <strong className="text-slate-200">{del.driver_name}</strong></span>
                       <span>Assigned: {new Date(del.assigned_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     </p>
                   </div>
@@ -297,8 +294,8 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
                         disabled={updatingId === del.id}
                         className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-500 hover:bg-blue-600 text-white shadow-md shadow-blue-500/20 transition flex items-center gap-1.5"
                       >
-                        <Truck className="w-3.5 h-3.5" />
-                        <span>{updatingId === del.id ? 'Updating...' : 'Start Collection / En Route'}</span>
+                        <Package className="w-3.5 h-3.5" />
+                        <span>{updatingId === del.id ? 'Updating...' : 'Start collection'}</span>
                       </button>
                     )}
 

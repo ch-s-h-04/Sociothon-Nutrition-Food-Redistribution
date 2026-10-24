@@ -85,10 +85,9 @@ export function findNGORecommendations(surplusEventId: string, currentTimeIso?: 
     const hasCapacity = ngo.current_capacity_meals >= event.quantity_meals;
     const isWithinRadius = distanceKm <= ngo.service_radius_km;
     const hasStorage = !event.storage_requirement || event.storage_requirement === 'ambient' || ngo.storage_capabilities.includes(event.storage_requirement);
-    const hasVehicle = vehicle !== null;
     const arrivesBeforeExpiry = etaMinutes < minutesUntilExpiry;
 
-    const feasible = isActive && isDietaryCompatible && isFoodTypeAccepted && hasCapacity && isWithinRadius && hasStorage && hasVehicle && arrivesBeforeExpiry;
+    const feasible = isActive && isDietaryCompatible && isFoodTypeAccepted && hasCapacity && isWithinRadius && hasStorage && arrivesBeforeExpiry;
 
     // Nutrition intelligence lookup for recipient district
     const districtProfile = getDistrictById(ngo.district) || getDistrictById(event.pickup_district);
@@ -143,11 +142,10 @@ export function findNGORecommendations(surplusEventId: string, currentTimeIso?: 
     if (!hasCapacity) failingReasons.push(`Capacity deficit (${ngo.current_capacity_meals} meals available < ${event.quantity_meals} needed)`);
     if (!isWithinRadius) failingReasons.push(`Service radius exceeded (${distanceKm} km > ${ngo.service_radius_km} km max)`);
     if (!hasStorage) failingReasons.push(`Lacks required storage capability (${event.storage_requirement})`);
-    if (!hasVehicle) failingReasons.push('No available transport vehicle in NGO fleet');
     if (!arrivesBeforeExpiry) failingReasons.push(`ETA (${etaMinutes} min) exceeds safe deadline (${Math.round(minutesUntilExpiry)} min remaining)`);
 
     const reason = feasible
-      ? `Feasible: High priority match. Vehicle ETA ~${etaMinutes}m (${distanceKm} km); +${nutritionVulnerabilityScore}pts ${districtSummary.district_name} nutrition vulnerability; +${nutrientSynergyScore}pts dietary synergy; storage verified.`
+      ? `Feasible: High priority match. ${distanceKm} km away; +${nutritionVulnerabilityScore}pts ${districtSummary.district_name} nutrition vulnerability; +${nutrientSynergyScore}pts dietary synergy; storage verified.`
       : `Infeasible: ${failingReasons.join('; ')}`;
 
     const criticalDeficiencies: string[] = [];

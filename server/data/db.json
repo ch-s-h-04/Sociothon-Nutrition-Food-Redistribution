@@ -839,7 +839,7 @@
       "capacity_meals": 120,
       "current_latitude": 21.371,
       "current_longitude": 74.241,
-      "available_at": "2026-10-24T10:41:51.924Z",
+      "available_at": "2026-10-24T10:58:13.430Z",
       "status": "available"
     },
     {
@@ -850,7 +850,7 @@
       "capacity_meals": 150,
       "current_latitude": 22.656,
       "current_longitude": 85.826,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -861,7 +861,7 @@
       "capacity_meals": 100,
       "current_latitude": 27.586,
       "current_longitude": 81.606,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -872,7 +872,7 @@
       "capacity_meals": 160,
       "current_latitude": 12.966,
       "current_longitude": 77.601,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -883,7 +883,7 @@
       "capacity_meals": 110,
       "current_latitude": 22.286,
       "current_longitude": 74.356,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -894,7 +894,7 @@
       "capacity_meals": 200,
       "current_latitude": 28.614,
       "current_longitude": 77.2095,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -905,7 +905,7 @@
       "capacity_meals": 180,
       "current_latitude": 22.573,
       "current_longitude": 88.3642,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -916,7 +916,7 @@
       "capacity_meals": 175,
       "current_latitude": 13.083,
       "current_longitude": 80.271,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -927,7 +927,7 @@
       "capacity_meals": 150,
       "current_latitude": 23.023,
       "current_longitude": 72.572,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -938,7 +938,7 @@
       "capacity_meals": 130,
       "current_latitude": 26.2395,
       "current_longitude": 73.025,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -949,7 +949,7 @@
       "capacity_meals": 140,
       "current_latitude": 27.701,
       "current_longitude": 82.001,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -960,7 +960,7 @@
       "capacity_meals": 120,
       "current_latitude": 18.814,
       "current_longitude": 82.713,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -971,7 +971,7 @@
       "capacity_meals": 220,
       "current_latitude": 19.077,
       "current_longitude": 72.878,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -982,7 +982,7 @@
       "capacity_meals": 170,
       "current_latitude": 17.386,
       "current_longitude": 78.4875,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -993,7 +993,7 @@
       "capacity_meals": 145,
       "current_latitude": 26.145,
       "current_longitude": 91.737,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     },
     {
@@ -1004,7 +1004,7 @@
       "capacity_meals": 160,
       "current_latitude": 9.932,
       "current_longitude": 76.268,
-      "available_at": "2026-10-24T10:41:51.926Z",
+      "available_at": "2026-10-24T10:58:13.433Z",
       "status": "available"
     }
   ],
@@ -1023,9 +1023,9 @@
       "quantity_meals": 65,
       "food_weight_kg": 24.7,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:21:51.926Z",
-      "available_at": "2026-10-24T10:31:51.926Z",
-      "expiry_at": "2026-10-24T12:31:51.926Z",
+      "created_at": "2026-10-24T10:38:13.433Z",
+      "available_at": "2026-10-24T10:48:13.433Z",
+      "expiry_at": "2026-10-24T12:48:13.433Z",
       "contact_name": "Ganesh Shinde",
       "contact_phone": "+91 94220 88765",
       "confidence": 92,
@@ -1046,9 +1046,9 @@
       "quantity_meals": 50,
       "food_weight_kg": 19,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:11:51.926Z",
-      "available_at": "2026-10-24T10:26:51.926Z",
-      "expiry_at": "2026-10-24T12:26:51.926Z",
+      "created_at": "2026-10-24T10:28:13.433Z",
+      "available_at": "2026-10-24T10:43:13.433Z",
+      "expiry_at": "2026-10-24T12:43:13.433Z",
       "contact_name": "Anup Tirkey",
       "contact_phone": "+91 93340 76543",
       "confidence": 89,
@@ -1069,9 +1069,9 @@
       "quantity_meals": 45,
       "food_weight_kg": 17.1,
       "storage_requirement": "hot_holding",
-      "created_at": "2026-10-24T10:01:51.926Z",
-      "available_at": "2026-10-24T10:21:51.926Z",
-      "expiry_at": "2026-10-24T12:01:51.926Z",
+      "created_at": "2026-10-24T10:18:13.433Z",
+      "available_at": "2026-10-24T10:38:13.433Z",
+      "expiry_at": "2026-10-24T12:18:13.433Z",
       "contact_name": "Ramesh Hegde",
       "contact_phone": "+91 98450 11234",
       "confidence": 94,
@@ -1080,5 +1080,5 @@
     }
   ],
   "deliveries": [],
-  "lastUpdated": "2026-10-24T10:41:51.930Z"
+  "lastUpdated": "2026-10-24T10:58:13.440Z"
 }

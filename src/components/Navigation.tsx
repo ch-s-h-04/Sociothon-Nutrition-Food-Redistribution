@@ -2,8 +2,6 @@ import React from 'react';
 import {
   Activity,
   HeartHandshake,
-  Route,
-  Truck,
   BarChart3,
   UtensilsCrossed,
   Sparkles,
@@ -32,11 +30,9 @@ export const Navigation: React.FC<NavigationProps> = ({
     { id: 'impact', label: 'Waste Monitoring & Impact', icon: BarChart3, badge: null, tag: 'UNEP/WARM' },
     { id: 'surplus', label: 'Surplus Prevention & Logging', icon: UtensilsCrossed, badge: activeSurplusCount > 0 ? activeSurplusCount : null, tag: 'Segregation' },
     { id: 'matching', label: 'Smart Recipient Matching', icon: HeartHandshake, badge: 'Unified', tag: 'Core' },
-    { id: 'routing', label: 'Collection Fleet & Routing', icon: Route, badge: null, tag: 'Logistics' },
-    { id: 'delivery', label: 'Collection & Recovery Tracking', icon: Truck, badge: inTransitDeliveriesCount > 0 ? `${inTransitDeliveriesCount} live` : null, tag: 'Multi-Pathway' },
+    { id: 'delivery', label: 'Reservation Tracking', icon: HeartHandshake, badge: inTransitDeliveriesCount > 0 ? `${inTransitDeliveriesCount} active` : null, tag: 'Recovery' },
     { id: 'nutrition', label: 'Nutrition Intelligence', icon: Activity, badge: null, tag: 'Supporting' },
     { id: 'planner', label: 'Fortify & Meal Planner', icon: PackageCheck, badge: null, tag: 'Supporting' },
-    { id: 'wizard', label: 'Guided Sociothon Demo', icon: Sparkles, badge: 'Judge Tour', tag: 'Demo', special: true },
   ];
 
   return (

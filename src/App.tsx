@@ -3,22 +3,19 @@ import { Navigation } from './components/Navigation';
 import { NutritionIntel } from './components/NutritionIntel';
 import { SurplusManagement } from './components/SurplusManagement';
 import { SmartMatching } from './components/SmartMatching';
-import { RouteDispatch } from './components/RouteDispatch';
 import { DeliveryTracker } from './components/DeliveryTracker';
 import { ImpactDashboard } from './components/ImpactDashboard';
 import { CulturalMealPlanner } from './components/CulturalMealPlanner';
-import { GuidedDemoWalkthrough } from './components/GuidedDemoWalkthrough';
 import { api } from './utils/api';
 import { SurplusEvent, DistrictSummary } from './types';
 import { Heart, Github, ExternalLink } from 'lucide-react';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<string>('impact');
+  const [activeTab, setActiveTab] = useState<string>('matching');
   const [surplusListings, setSurplusListings] = useState<SurplusEvent[]>([]);
   const [districts, setDistricts] = useState<DistrictSummary[]>([]);
   const [selectedSurplusId, setSelectedSurplusId] = useState<string>('');
   const [targetDistrict, setTargetDistrict] = useState<string>('Nandurbar');
-  const [highlightDeliveryId, setHighlightDeliveryId] = useState<string>('');
   const [isResetting, setIsResetting] = useState<boolean>(false);
 
   useEffect(() => {
@@ -66,12 +63,6 @@ export function App() {
     setActiveTab('matching');
   };
 
-  const handleDispatchAssigned = (deliveryId: string) => {
-    setHighlightDeliveryId(deliveryId);
-    loadGlobalData();
-    setActiveTab('delivery');
-  };
-
   const activeSurplusCount = surplusListings.filter(s => s.status === 'available').length;
   // in transit deliveries estimate
   const inTransitCount = surplusListings.filter(s => s.status === 'in_transit' || s.status === 'assigned').length;
@@ -88,13 +79,6 @@ export function App() {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === 'wizard' && (
-          <GuidedDemoWalkthrough
-            onNavigateTab={(tab) => setActiveTab(tab)}
-            onResetDb={handleResetDb}
-          />
-        )}
-
         {activeTab === 'nutrition' && (
           <NutritionIntel
             onSelectDistrictForRedistribution={handleSelectDistrictForRedistribution}
@@ -115,17 +99,13 @@ export function App() {
             surplusListings={surplusListings}
             selectedSurplusId={selectedSurplusId}
             onSelectSurplusId={setSelectedSurplusId}
-            onDispatchAssigned={handleDispatchAssigned}
+            onReservationCreated={loadGlobalData}
           />
-        )}
-
-        {activeTab === 'routing' && (
-          <RouteDispatch />
         )}
 
         {activeTab === 'delivery' && (
           <DeliveryTracker
-            highlightDeliveryId={highlightDeliveryId}
+            highlightDeliveryId=""
             onRefreshParent={loadGlobalData}
           />
         )}
