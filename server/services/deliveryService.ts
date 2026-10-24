@@ -1,5 +1,5 @@
 import { store } from '../db/store.ts';
-import type { DeliveryRecord, DeliveryStatus, RecoveryPathway, SurplusStatus } from '../types/index.ts';
+import type { DeliveryRecord, DeliveryStatus, RecoveryPathway, SurplusStatus, ProviderRating } from '../types/index.ts';
 import { calculateHaversineDistanceKm, estimateTravelTimeMinutes } from './matchingService.ts';
 
 export interface AssignDeliveryInput {
@@ -220,10 +220,35 @@ export function updateDeliveryStatus(
   return updated;
 }
 
+function attachProviderRating(delivery: DeliveryRecord): DeliveryRecord {
+  return { ...delivery, provider_rating: store.getProviderRatingByDeliveryId(delivery.id) };
+}
+
 export function getAllDeliveries(): DeliveryRecord[] {
-  return store.getDeliveries();
+  return store.getDeliveries().map(attachProviderRating);
 }
 
 export function getDeliveryById(id: string): DeliveryRecord | undefined {
-  return store.getDeliveryById(id);
+  const delivery = store.getDeliveryById(id);
+  return delivery ? attachProviderRating(delivery) : undefined;
+}
+
+export function rateProviderForDelivery(deliveryId: string, ratingValue: number): ProviderRating {
+  if (!Number.isInteger(ratingValue) || ratingValue < 1 || ratingValue > 5) {
+    throw new Error('Rating must be a whole number from 1 to 5');
+  }
+
+  const delivery = store.getDeliveryById(deliveryId);
+  if (!delivery) throw new Error(`Delivery '${deliveryId}' not found`);
+  if (delivery.status !== 'delivered') {
+    throw new Error('Providers can only be rated after a verified NGO handover');
+  }
+
+  return store.upsertProviderRating({
+    delivery_id: delivery.id,
+    provider_id: delivery.donor_id,
+    ngo_id: delivery.ngo_id,
+    rating: ratingValue,
+    created_at: new Date().toISOString()
+  });
 }

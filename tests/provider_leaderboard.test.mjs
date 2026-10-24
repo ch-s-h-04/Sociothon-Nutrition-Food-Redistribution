@@ -10,7 +10,7 @@ test('Provider leaderboard: ranks active providers with a transparent volume-ind
   assert.ok(leaderboard.length > 0, 'Active providers should be listed');
   assert.equal(leaderboard[0].rank, 1);
   assert.equal(
-    PROVIDER_TRUST_METHOD.reliability + PROVIDER_TRUST_METHOD.safety + PROVIDER_TRUST_METHOD.handover + PROVIDER_TRUST_METHOD.verification,
+    PROVIDER_TRUST_METHOD.reliability + PROVIDER_TRUST_METHOD.ngo_rating + PROVIDER_TRUST_METHOD.safety + PROVIDER_TRUST_METHOD.handover + PROVIDER_TRUST_METHOD.verification,
     100,
     'Trust-score weights should total 100%'
   );

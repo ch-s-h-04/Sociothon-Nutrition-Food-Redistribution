@@ -3,7 +3,8 @@ import {
   assignDonationToNGO,
   updateDeliveryStatus,
   getAllDeliveries,
-  getDeliveryById
+  getDeliveryById,
+  rateProviderForDelivery
 } from '../services/deliveryService.ts';
 
 const router = express.Router();
@@ -73,6 +74,16 @@ router.patch('/:id/status', (req: Request, res: Response) => {
     }
     const updated = updateDeliveryStatus(req.params.id, status, recovery_pathway, notes);
     res.json(updated);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// A recipient NGO can rate a provider once its assigned delivery is verified as delivered.
+router.post('/:id/provider-rating', (req: Request, res: Response) => {
+  try {
+    const rating = rateProviderForDelivery(req.params.id, Number(req.body.rating));
+    res.status(201).json(rating);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }

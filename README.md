@@ -135,7 +135,7 @@ The platform operationalizes a five-stage closed-loop lifecycle that intercepts 
 - **6-Step Judge Walkthrough**: Built-in interactive evaluator wizard that guides reviewers through logging surplus, algorithmic matching, dispatching routes, executing multi-pathway handover, and observing immediate impact ledger updates.
 
 ### 9. Provider Trust Leaderboard
-- **Food Recovery Partner Reputation**: Publicly ranks active providers using a transparent Trust Score: reliability (40%), food-safety confidence (25%), successful NGO handovers (25%), and capped verified activity (10%). Donation quantity does not affect rank.
+- **Food Recovery Partner Reputation**: Publicly ranks active providers using a transparent Trust Score: reliability (30%), NGO post-handover ratings (30%), food-safety confidence (20%), successful NGO handovers (15%), and capped verified activity (5%). Donation quantity does not affect rank.
 
 ---
 

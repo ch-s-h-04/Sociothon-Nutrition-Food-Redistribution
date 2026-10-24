@@ -5,7 +5,7 @@ import { api } from '../utils/api';
 
 type LeaderboardResponse = {
   providers: ProviderLeaderboardEntry[];
-  methodology: { reliability: number; safety: number; handover: number; verification: number; principle: string };
+  methodology: { reliability: number; ngo_rating: number; safety: number; handover: number; verification: number; principle: string };
 };
 
 const badgeStyle: Record<ProviderLeaderboardEntry['badge'], string> = {
@@ -55,9 +55,10 @@ export const ProviderLeaderboard: React.FC = () => {
             <p className="text-xs text-slate-400 mt-1">{data?.methodology.principle}</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
           {[
             ['Reliability', data?.methodology.reliability, 'Punctuality and cancellation record'],
+            ['NGO ratings', data?.methodology.ngo_rating, 'Post-handover recipient feedback'],
             ['Food safety', data?.methodology.safety, 'Quality confidence of logged surplus'],
             ['Safe handovers', data?.methodology.handover, 'Resolved collections delivered to NGOs'],
             ['Verification', data?.methodology.verification, 'Completed handovers, capped at four']
@@ -90,7 +91,7 @@ export const ProviderLeaderboard: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-3 lg:flex-1 text-center text-xs">
                 <div><span className="block text-lg font-black text-emerald-300">{provider.reliability_score}</span><span className="text-slate-500">Reliability</span></div>
-                <div><span className="block text-lg font-black text-cyan-300">{provider.safety_score}</span><span className="text-slate-500">Safety</span></div>
+                <div><span className="block text-lg font-black text-cyan-300">{provider.ngo_rating ? `${provider.ngo_rating}/5` : '—'}</span><span className="text-slate-500">NGO rating</span></div>
                 <div><span className="block text-lg font-black text-violet-300">{provider.verified_handovers}</span><span className="text-slate-500">Handovers</span></div>
               </div>
 

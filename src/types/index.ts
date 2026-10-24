@@ -108,11 +108,21 @@ export interface ProviderLeaderboardEntry {
   trust_score: number;
   badge: 'Gold' | 'Silver' | 'Bronze' | 'Verified';
   reliability_score: number;
+  ngo_rating: number | null;
+  ngo_rating_count: number;
   safety_score: number;
   handover_score: number;
   verification_score: number;
   verified_handovers: number;
   meals_redistributed: number;
+}
+
+export interface ProviderRating {
+  delivery_id: string;
+  provider_id: string;
+  ngo_id: string;
+  rating: number;
+  created_at: string;
 }
 
 export interface RecipientNGO {
@@ -234,6 +244,7 @@ export interface DeliveryRecord {
   assigned_at: string;
   dispatched_at?: string;
   delivered_at?: string;
+  provider_rating?: ProviderRating;
   environmental_impact: {
     co2_avoided_kg: number;
     water_saved_liters: number;

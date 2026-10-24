@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { RestaurantDonor, RecipientNGO, FleetVehicle, SurplusEvent, DeliveryRecord } from '../types/index.ts';
+import type { RestaurantDonor, RecipientNGO, FleetVehicle, SurplusEvent, DeliveryRecord, ProviderRating } from '../types/index.ts';
 import { initialRestaurants, initialNGOs, initialVehicles, initialSurplusEvents } from './initialData.ts';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -14,6 +14,7 @@ export interface DatabaseSchema {
   vehicles: FleetVehicle[];
   surplusEvents: SurplusEvent[];
   deliveries: DeliveryRecord[];
+  providerRatings: ProviderRating[];
   lastUpdated: string;
 }
 
@@ -31,7 +32,7 @@ class Store {
         if (raw && raw.trim().length > 0) {
           const parsed = JSON.parse(raw);
           if (parsed.restaurants && parsed.ngos && parsed.surplusEvents) {
-            return parsed;
+            return { ...parsed, providerRatings: parsed.providerRatings || [] };
           }
         }
       }
@@ -45,6 +46,7 @@ class Store {
       vehicles: [...initialVehicles],
       surplusEvents: [...initialSurplusEvents],
       deliveries: [],
+      providerRatings: [],
       lastUpdated: new Date().toISOString()
     };
     this.persist(initial);
@@ -185,6 +187,22 @@ class Store {
     return this.data.deliveries[idx];
   }
 
+  getProviderRatings(): ProviderRating[] {
+    return this.data.providerRatings;
+  }
+
+  getProviderRatingByDeliveryId(deliveryId: string): ProviderRating | undefined {
+    return this.data.providerRatings.find(rating => rating.delivery_id === deliveryId);
+  }
+
+  upsertProviderRating(rating: ProviderRating): ProviderRating {
+    const index = this.data.providerRatings.findIndex(item => item.delivery_id === rating.delivery_id);
+    if (index >= 0) this.data.providerRatings[index] = rating;
+    else this.data.providerRatings.push(rating);
+    this.save();
+    return rating;
+  }
+
   // Reset helper
   reset(): void {
     this.data = {
@@ -193,6 +211,7 @@ class Store {
       vehicles: [...initialVehicles],
       surplusEvents: [...initialSurplusEvents],
       deliveries: [],
+      providerRatings: [],
       lastUpdated: new Date().toISOString()
     };
     this.save();

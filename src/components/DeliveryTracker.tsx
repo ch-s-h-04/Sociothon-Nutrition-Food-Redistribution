@@ -15,7 +15,8 @@ import {
   Sprout,
   AlertTriangle,
   Trash2,
-  ShieldAlert
+  ShieldAlert,
+  Star
 } from 'lucide-react';
 
 interface DeliveryTrackerProps {
@@ -30,6 +31,7 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
   const [deliveries, setDeliveries] = useState<DeliveryRecord[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [ratingDeliveryId, setRatingDeliveryId] = useState<string | null>(null);
 
   useEffect(() => {
     loadDeliveries();
@@ -44,6 +46,18 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
       console.error('Failed to load deliveries:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleProviderRating = async (deliveryId: string, rating: number) => {
+    try {
+      setRatingDeliveryId(deliveryId);
+      await api.deliveries.rateProvider(deliveryId, rating);
+      await loadDeliveries();
+    } catch (err: any) {
+      alert(`Rating failed: ${err.message}`);
+    } finally {
+      setRatingDeliveryId(null);
     }
   };
 
@@ -334,9 +348,31 @@ export const DeliveryTracker: React.FC<DeliveryTrackerProps> = ({
                     )}
 
                     {del.status === 'delivered' && (
-                      <span className="text-xs font-mono text-emerald-400 font-semibold flex items-center gap-1">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Human Redistribution Verified
-                      </span>
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <span className="font-mono text-emerald-400 font-semibold flex items-center gap-1">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Human Redistribution Verified
+                        </span>
+                        {del.provider_rating ? (
+                          <span className="inline-flex items-center gap-1 text-amber-300 font-semibold">
+                            NGO rating: {del.provider_rating.rating}/5 <Star className="w-3.5 h-3.5 fill-current" />
+                          </span>
+                        ) : (
+                          <div className="flex items-center gap-1.5 rounded-lg bg-slate-800/80 border border-slate-700 px-2 py-1">
+                            <span className="text-slate-400">NGO rate provider</span>
+                            {[1, 2, 3, 4, 5].map((rating) => (
+                              <button
+                                key={rating}
+                                onClick={() => handleProviderRating(del.id, rating)}
+                                disabled={ratingDeliveryId === del.id}
+                                aria-label={`Rate ${rating} out of 5`}
+                                className="text-slate-500 hover:text-amber-300 disabled:opacity-50 transition"
+                              >
+                                <Star className="w-3.5 h-3.5" />
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     )}
 
                     {del.status === 'diverted_to_compost' && (

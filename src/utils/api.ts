@@ -77,7 +77,9 @@ export const api = {
     reserve: (data: { surplus_id: string; ngo_id: string; vehicle_id?: string }) =>
       fetchJson<DeliveryRecord>('/deliveries/reserve', { method: 'POST', body: JSON.stringify(data) }),
     updateStatus: (id: string, status: DeliveryStatus, recovery_pathway?: RecoveryPathway, notes?: string) =>
-      fetchJson<DeliveryRecord>(`/deliveries/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, recovery_pathway, notes }) })
+      fetchJson<DeliveryRecord>(`/deliveries/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status, recovery_pathway, notes }) }),
+    rateProvider: (id: string, rating: number) =>
+      fetchJson(`/deliveries/${id}/provider-rating`, { method: 'POST', body: JSON.stringify({ rating }) })
   },
 
   // Impact & The Paradox Metrics
@@ -88,7 +90,7 @@ export const api = {
   providers: {
     getLeaderboard: () => fetchJson<{
       providers: ProviderLeaderboardEntry[];
-      methodology: { reliability: number; safety: number; handover: number; verification: number; principle: string };
+      methodology: { reliability: number; ngo_rating: number; safety: number; handover: number; verification: number; principle: string };
     }>('/providers/leaderboard')
   },
 
